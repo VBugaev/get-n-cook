@@ -2,42 +2,36 @@ const express = require('express'),
   bodyParser = require('body-parser'),
   morgan = require('morgan'),
   db = require('./db.js'),
+  cors = require('cors'),
   nodemailer = require('nodemailer'),
   router = require('./routes/index'),
   sql = require('mssql');
 
 const app = express();
-const PORT = 3000;
-const config = {
-  user: 'debug',
-  password: 'debug',
-  server: 'localhost',
-  database: 'GetncookDB',
+const PORT = 5000;
+const config = require('./configs/dbConfig.js').config;
 
-  options: {
-    encrypt: true
-  }
-}
-
-app.use(morgan('combined'));
+app.use(cors());
 app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({
+  extended: true
+}));
 
-app.use((req, res, next) => {
-  res.header('Content-Type', 'application/json');
-  next();
-});
-
-router(app, db);
-
-app.listen(PORT, () => {
+app.get('/api/users', (req, res, next) => {
   sql.connect(config).then(pool => {
     return pool.request()
-    .execute('GetAllUsers')
-  }).then(res => console.log(res))
-  .catch(err => {
-    console.log(err);
+      .execute('GetAllUsers');
+  }).then(result => {
+    res.send(result.recordset);
+    sql.close();
   })
+    .catch(err => {
+      res.status(500).send('Internal server error');
+      sql.close();
+    });
+});
 
+app.listen(PORT);
 
 
   //   let transporter = nodemailer.createTransport({
@@ -60,7 +54,6 @@ app.listen(PORT, () => {
   //       console.log(info);
   //  });
   //     console.log('Express listening on port:', PORT);
-});
 
 //drop and resync with { force: true }
 // db.sequelize.sync({ force: true }).then(() => {
