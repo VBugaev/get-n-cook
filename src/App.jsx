@@ -5,7 +5,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-import { Table, Container, TabContent, TabPane, Nav, NavItem, NavLink, Row, Col } from 'reactstrap';
+import { Table, Container, TabContent, TabPane, Nav, NavItem, NavLink, Row, Col, Button, Form, FormGroup, Label, Input } from 'reactstrap';
 import classnames from 'classnames';
 
 class App extends Component {
@@ -158,7 +158,13 @@ class App extends Component {
                       </Table>
                     </Col>
                     <Col sm="6">
-
+                      <Form>
+                        <FormGroup>
+                          <h5 className="display-5">Create Role</h5>
+                          <Input type="email" name="title" id="" placeholder="type role's title" />
+                        </FormGroup>
+                        <Button block>Create role</Button>
+                      </Form>
                     </Col>
                   </Row>
                 </TabPane>
