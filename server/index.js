@@ -18,7 +18,7 @@ app.use(bodyParser.urlencoded({
 }));
 
 app.get('/api/users', (req, res, next) => {
-  sql.connect(config).then(pool => {
+  new sql.ConnectionPool(config).connect().then(pool => {
     return pool.request()
       .execute('GetAllUsers');
   }).then(result => {
@@ -28,6 +28,20 @@ app.get('/api/users', (req, res, next) => {
     .catch(err => {
       res.status(500).send('Internal server error');
       sql.close();
+    });
+});
+
+app.get('/api/roles', (req, res, next) => {
+  new sql.ConnectionPool(config).connect().then(pool => {
+    return pool.request()
+      .execute('GetAllRoles');
+  }).then(result => {
+    sql.close();
+    res.send(result.recordset);
+  })
+    .catch(err => {
+      sql.close();
+      res.status(500).send('Internal server error');
     });
 });
 
