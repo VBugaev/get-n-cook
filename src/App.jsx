@@ -1,12 +1,17 @@
 import React, { Component } from 'react';
 import dayjs from 'dayjs';
-import './fontAwesomeLibrary.js';
+import './utils/fontAwesomeLibrary.js';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-import { Table, Container, TabContent, TabPane, Nav, NavItem, NavLink, Row, Col, Button, Form, FormGroup, Label, Input } from 'reactstrap';
+import { Table, Container, TabContent, TabPane, Nav, NavItem, NavLink, Row, Col, Button, Form, FormGroup, Input } from 'reactstrap';
 import classnames from 'classnames';
+
+import { Provider } from 'react-redux';
+import { configureStore } from './utils/configureStore.js';
+
+const store = configureStore();
 
 class App extends Component {
   constructor(props) {
@@ -46,6 +51,7 @@ class App extends Component {
   render() {
     const { users, roles } = this.state;
     return (
+      <Provider store={store}>
       <div className="App">
         <Container fluid={true}>
           <Row>
@@ -161,7 +167,7 @@ class App extends Component {
                       <Form>
                         <FormGroup>
                           <h5 className="display-5">Create Role</h5>
-                          <Input type="email" name="title" id="" placeholder="type role's title" />
+                          <Input name="title" placeholder="type role's title" />
                         </FormGroup>
                         <Button block>Create role</Button>
                       </Form>
@@ -173,6 +179,7 @@ class App extends Component {
           </Row>
         </Container>
       </div>
+      </Provider>
     );
   }
 }
