@@ -4,12 +4,12 @@ const express = require('express'),
   db = require('./db.js'),
   cors = require('cors'),
   nodemailer = require('nodemailer'),
-  router = require('./routes/index'),
-  sql = require('mssql');
+  sql = require('mssql'),
+  pool = require('./db.js'),
+  router = require('./routerSetup.js');
 
 const app = express();
 const PORT = 5000;
-const config = require('./configs/dbConfig.js').config;
 
 app.use(cors());
 app.use(bodyParser.json());
@@ -17,8 +17,10 @@ app.use(bodyParser.urlencoded({
   extended: true
 }));
 
+app.use('/api', router);
+
 app.get('/api/users', (req, res, next) => {
-  new sql.ConnectionPool(config).connect().then(pool => {
+  pool.connect().then(pool => {
     return pool.request()
       .execute('GetAllUsers');
   }).then(result => {
@@ -32,7 +34,7 @@ app.get('/api/users', (req, res, next) => {
 });
 
 app.get('/api/roles', (req, res, next) => {
-  new sql.ConnectionPool(config).connect().then(pool => {
+  pool.connect().then(pool => {
     return pool.request()
       .execute('GetAllRoles');
   }).then(result => {
@@ -44,6 +46,7 @@ app.get('/api/roles', (req, res, next) => {
       res.status(500).send('Internal server error');
     });
 });
+
 
 app.listen(PORT);
 

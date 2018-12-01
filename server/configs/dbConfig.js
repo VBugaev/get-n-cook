@@ -1,4 +1,4 @@
-exports.config = {
+module.exports = {
     user: 'debug',
     password: 'debug',
     server: 'localhost',
