@@ -10,7 +10,8 @@ const getAllUsers = () => {
             return result.recordset;
         })
         .catch(err => {
-            pool.close();
+            sql.close();
+            throw err;
         });
 };
 
