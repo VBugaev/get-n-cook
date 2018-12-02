@@ -6,7 +6,11 @@ const express = require('express'),
   nodemailer = require('nodemailer'),
   sql = require('mssql'),
   pool = require('./db.js'),
-  router = require('./routerSetup.js');
+  router = require('./routerSetup.js'),
+  multer = require('multer'),
+  storage = multer.memoryStorage(),
+  upload = multer({ storage: storage });
+
 
 const app = express();
 const PORT = 5000;
@@ -18,6 +22,24 @@ app.use(bodyParser.urlencoded({
 }));
 
 app.use('/api', router);
+
+app.post('/api/images', upload.single('roleImage'), (req, res, next) => {
+  pool.then(pool => {
+    return pool.request()
+      .input('Title', sql.VarBinary(sql.MAX), req.body.title)
+      .execute('CreateCategory');
+  }).then(result => {
+    res.send(result.recordset);
+  })
+    .catch(err => {
+      pool.close();
+      res.status(500).send(err);
+    });
+});
+
+app.get('/api/images', (req, res, next) => {
+
+});
 
 app.listen(PORT);
 

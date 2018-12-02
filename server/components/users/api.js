@@ -1,18 +1,14 @@
 module.exports = (router) => {
-   let sql = require('mssql');
-   let pool = require('../../db.js');
+   let usersDAL = require('./dal.js');
 
    router.route('/users')
       .get((req, res, next) => {
-         pool.then(pool => {
-            return pool.request()
-               .execute('GetAllUsers');
-         }).then(result => {
-            res.send(result.recordset);
+         usersDAL.getAllUsers()
+         .then(result => {
+            res.send(result);
          })
-            .catch(err => {
-               pool.close();
-               res.status(500).send('Internal server error');
-            });
+         .catch(err => {
+            res.status(500).send(err);
+         });
       });
 }
