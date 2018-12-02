@@ -4,11 +4,10 @@ module.exports = (router) => {
 
     router.route('/roles')
         .get((req, res, next) => {
-            pool.connect().then(pool => {
+            pool.then(pool => {
                 return pool.request()
                     .execute('GetAllRoles');
             }).then(result => {
-                pool.close();
                 res.send(result.recordset);
             })
                 .catch(err => {

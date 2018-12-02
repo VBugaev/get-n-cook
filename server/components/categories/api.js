@@ -4,11 +4,10 @@ module.exports = (router) => {
 
     router.route('/categories')
         .get((req, res, next) => {
-            pool.connect().then(pool => {
+            pool.then(pool => {
                 return pool.request()
                     .execute('GetAllCategories');
             }).then(result => {
-                pool.close();
                 res.send(result.recordset);
             })
                 .catch(err => {
@@ -17,12 +16,11 @@ module.exports = (router) => {
                 });
         })
         .post((req, res, next) => {
-            pool.connect().then(pool => {
+            pool.then(pool => {
                 return pool.request()
                     .input('Title', sql.NVarChar(100), req.body.title)
                     .execute('CreateCategory');
             }).then(result => {
-                pool.close();
                 res.send(result.recordset);
             })
                 .catch(err => {
@@ -31,13 +29,12 @@ module.exports = (router) => {
                 });
         })
         .delete((req, res, next) => {
-            pool.connect().then(pool => {
+            pool.then(pool => {
                 return pool.request()
                     .input('CategoryId', sql.UniqueIdentifier, req.body.id)
                     .execute('DeleteCategoryById');
             }).then(result => {
-                pool.close();
-                res.send('Category Deleted');
+                res.status(200).send('Category Deleted');
             })
                 .catch(err => {
                     pool.close();
@@ -45,13 +42,12 @@ module.exports = (router) => {
                 });
         })
         .put((req, res, next) => {
-            pool.connect().then(pool => {
+            pool.then(pool => {
                 return pool.request()
                     .input('CategoryId', sql.UniqueIdentifier, req.body.id)
                     .input('Title', sql.NVarChar(100), req.body.title)
                     .execute('UpdateCategoryById');
             }).then(result => {
-                pool.close();
                 res.send(result.recordset);
             })
                 .catch(err => {
