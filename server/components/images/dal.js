@@ -12,6 +12,7 @@ const getImageById = (id) => {
         })
         .catch(err => {
             pool.close();
+            throw err;
         })
 };
 

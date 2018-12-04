@@ -1,7 +1,7 @@
 const express = require('express'),
   bodyParser = require('body-parser'),
+  helmet = require('helmet'),
   morgan = require('morgan'),
-  db = require('./db.js'),
   cors = require('cors'),
   nodemailer = require('nodemailer'),
   sql = require('mssql'),
@@ -13,6 +13,7 @@ const app = express();
 const PORT = 5000;
 
 app.use(cors());
+app.use(helmet());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
   extended: true
