@@ -32,4 +32,4 @@ module.exports = (router) => {
             .then(result => res.send(result))
             .catch(err => res.status(500).send(err))
         });
-}
+};

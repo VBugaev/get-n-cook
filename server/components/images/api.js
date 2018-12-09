@@ -31,6 +31,23 @@ module.exports = (router) => {
                     res.status(500).send(err);
                 });
         })
+        .put(upload.single('image'), (req, res, next) => {
+            const normalizedObj = {
+                id: req.body.id,
+                buffer: req.file.buffer,
+                originalname: req.file.originalname,
+                mimetype: req.file.mimetype
+            };
+
+            imagesDAL.updateImage(normalizedObj)
+                .then(result => {
+                    res.contentType(result.MIMEType);
+                    res.send(result.BinaryData);
+                })
+                .catch(err => {
+                    res.status(500).send(err);
+                });
+        })
         .delete((req, res, next) => {
             imagesDAL.deleteImage(req.body.id)
                 .then(() => {

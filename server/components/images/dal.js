@@ -31,6 +31,22 @@ const uploadImage = (imageData) => {
         });
 };
 
+const updateImage = updObj => {
+    return pool.then(pool => {
+        return pool.request()
+          .input('ImageId', sql.UniqueIdentifier, updObj.id)
+          .input('BinaryData', sql.VarBinary(sql.MAX), updObj.buffer)
+          .input('FileName', sql.NVarChar(sql.MAX), updObj.originalname)
+          .input('MIMEType', sql.NVarChar(50), updObj.mimetype)
+          .execute('UpdateImageById');
+      }).then(result => {
+        return result.recordset[0];
+      })
+        .catch(err => {
+          throw err;
+        });
+};
+
 const deleteImage = (id) => {
     return pool.then(pool => {
         return pool.request()
@@ -47,5 +63,6 @@ const deleteImage = (id) => {
 module.exports = {
     getImageById,
     uploadImage,
-    deleteImage
+    deleteImage,
+    updateImage
 };
