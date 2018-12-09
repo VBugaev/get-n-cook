@@ -15,6 +15,29 @@ const getAllUsers = () => {
         });
 };
 
+const getUserByEmail = (email) => {
+
+};
+
+const getUserById = (id) => {
+
+};
+
+const createUser = (userData) => {
+
+};
+
+const updateUser = (userData) => {
+
+}
+
+const deleteUser = (id) => {
+
+};
+
 module.exports = {
-    getAllUsers
+    getAllUsers,
+    getUserByEmail,
+    getUserById,
+    createUser
 };
