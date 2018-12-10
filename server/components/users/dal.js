@@ -43,24 +43,22 @@ const getUserById = (id) => {
     });
 };
 
-const createUser = (userData) => {
-    return pool.then(pool => {
-        return pool.request()
-            .input('Login', sql.NVarChar(50), userData.login)
-            .input('Email', sql.NVarChar(sql.MAX), userData.email)
-            .input('Password', sql.NVarChar(sql.MAX), userData.password)
-            .input('RoleId', sql.UniqueIdentifier, userData.roleId)
-            .input('Name', sql.NVarChar(50), userData.name)
-            .input('Surname', sql.NVarChar(50), userData.surname)
-            .input('AboutSection', sql.NVarChar(sql.MAX), userData.about)
-            .execute('CreateUser')
-    })
-    .then(result => {
+const createUser = async (userData) => {
+    try {
+        let connectedPool = await pool;
+        const result = await connectedPool.request()
+        .input('Login', sql.NVarChar(50), userData.login)
+        .input('Email', sql.NVarChar(sql.MAX), userData.email)
+        .input('Password', sql.NVarChar(sql.MAX), userData.password)
+        .input('RoleId', sql.UniqueIdentifier, userData.roleId)
+        .input('Name', sql.NVarChar(50), userData.name)
+        .input('Surname', sql.NVarChar(50), userData.surname)
+        .input('AboutSection', sql.NVarChar(sql.MAX), userData.about)
+        .execute('CreateUser');
         return result.recordset[0];
-    })
-    .catch(err => {
+    } catch (err) {
         throw err;
-    });
+    }
 };
 
 const updateUser = (userData) => {
