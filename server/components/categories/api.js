@@ -1,6 +1,4 @@
 module.exports = (router) => {
-    let sql = require('mssql');
-    let pool = require('../../db.js');
     let categoriesDAL = require('./dal.js');
 
     router.route('/categories')

@@ -1,18 +1,15 @@
 module.exports = (router) => {
-    let sql = require('mssql');
-    let pool = require('../../db.js');
+    let rolesDAL = require('./dal.js');
 
     router.route('/roles')
         .get((req, res, next) => {
-            pool.then(pool => {
-                return pool.request()
-                    .execute('GetAllRoles');
-            }).then(result => {
-                res.send(result.recordset);
-            })
-                .catch(err => {
-                    pool.close();
-                    res.status(500).send(err);
-                });
+            rolesDAL.getAllRoles()
+            .then(result => res.send(result))
+            .catch(err => res.status(500).send(err));
+        })
+        .post((req, res, next) => {
+            rolesDAL.createRole(req.body.title)
+            .then(result => res.send(result))
+            .catch(err => res.status(500).send(err));
         });
 };
