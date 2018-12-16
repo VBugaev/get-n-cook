@@ -21,7 +21,7 @@ module.exports = (router) => {
       .post((req, res, next) => {
          usersController.register(req.body)
             .then(result => {
-               res.send(result);
+               res.send(usersController.toAuthJSON(result));
             })
             .catch(err => {
                res.status(500).send(err);

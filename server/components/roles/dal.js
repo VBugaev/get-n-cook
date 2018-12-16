@@ -6,6 +6,7 @@ const getAllRoles = (filter) => {
         return pool.request()
             .execute('GetAllRoles');
     }).then(result => {
+        console.log(result.recordset);
         if (filter) {
             return result.recordset
             .filter(el => el.Title.includes(filter));

@@ -3,9 +3,9 @@ const secret = 'secret';
 
 const generateToken = (user) => {
     return jwt.sign({
-        _id: user.id,
-        name: user.name,
-        role: user.role,
+        _id: user.Id,
+        name: user.Email,
+        role: user.RoleName,
     }, secret, { expiresIn: '3h' });
 };
 

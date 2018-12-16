@@ -14,6 +14,8 @@ const isProduction = process.env.NODE_ENV === 'production';
 const app = express();
 const PORT = 5000;
 
+require('./configs/authConfig.js');
+
 app.use(cors());
 app.use(helmet());
 app.use(bodyParser.json());

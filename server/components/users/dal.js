@@ -61,6 +61,18 @@ const createUser = async (userData) => {
     }
 };
 
+const getPasswordById = async (userId) => {
+    try {
+        let connectedPool = await pool;
+        const result = await connectedPool.request()
+        .input('UserId', sql.UniqueIdentifier, userId)
+        .execute('GetPasswordById');
+        return result.recordset[0];
+    } catch (err) {
+        throw err;
+    }
+}
+
 const updateUser = (userData) => {
     return pool.then(pool => {
         return pool.request()
@@ -133,5 +145,6 @@ module.exports = {
     updateUser,
     deleteUser,
     setPassword,
-    updatePassword
+    updatePassword,
+    getPasswordById
 };
