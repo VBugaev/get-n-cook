@@ -28,4 +28,21 @@ module.exports = (router) => {
             })
 
       });
+
+      router.route('/login')
+      .post(async (req, res, next) => {
+         try {
+            const result = await usersController.login(req.body);
+            if (result) {
+               res.send(usersController.toAuthJSON(result));
+            } else {
+               res.send({
+                  authenticated: false,
+                  error: 'invalid username of password'
+               });
+            }
+         } catch (error) {
+            res.status(500).send(error);
+         }
+      });
 }
