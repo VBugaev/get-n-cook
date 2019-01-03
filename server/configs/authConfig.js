@@ -6,12 +6,12 @@ const users = require('../components/users/controller.js');
 passport.use(new LocalStrategy({
   usernameField: 'user[email]',
   passwordField: 'user[password]',
-}, (email, password, done) => {
+}, async (email, password, done) => {
     let loginData = {
         email,
         password
     };
-    let user = users.login(loginData);
+    let user = await users.login(loginData);
     if (user) {
         return done(null, user);
     }

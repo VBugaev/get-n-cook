@@ -3,6 +3,7 @@ import dayjs from 'dayjs';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
+import { normalizeArray } from '../../utils/arrayUtils.js';
 import { Table, Container, TabContent, TabPane, Nav, NavItem, NavLink, Row, Col, Button, Form, FormGroup, Input } from 'reactstrap';
 import classnames from 'classnames';
 
@@ -12,6 +13,7 @@ class AdminPage extends Component {
         this.state = {
           activeTab: '1',
           users: [],
+          normalizedUsers: [],
           roles: []
         };
       }
@@ -30,7 +32,10 @@ class AdminPage extends Component {
             return res.json();
           })
           .then(values => {
+            let normalizedUsers = normalizeArray(values);
+            console.log(normalizedUsers);
             this.setState({ users: values });
+            this.setState({ normalizedUsers });
           });
         fetch('/api/roles')
           .then(res => {

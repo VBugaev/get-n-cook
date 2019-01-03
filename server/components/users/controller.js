@@ -14,13 +14,9 @@ const register = async (userData) => {
 
 const login = async (loginData) => {
     const currentUser = await usersDAL.getUserByEmail(loginData.email);
-    console.log(currentUser);
     if (currentUser) {
         const currentPassword = await usersDAL.getPasswordById(currentUser.Id);
-        console.log(loginData.password);
-        console.log(currentPassword);
         const isMatch = await bcrypt.compare(loginData.password, currentPassword.Hash);
-        console.log(isMatch);
         if (isMatch) {
             return currentUser;
         }
