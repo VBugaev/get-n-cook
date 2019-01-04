@@ -4,9 +4,9 @@ module.exports = (router) => {
         storage = multer.memoryStorage(),
         upload = multer({ storage: storage });
 
-    router.route('/images')
+    router.route('/image/:id')
         .get((req, res, next) => {
-            imagesDAL.getImageById(req.body.id)
+            imagesDAL.getImageById(req.params.id)
                 .then(result => {
                     res.contentType(result.MIMEType);
                     res.send(result.BinaryData);
@@ -15,6 +15,7 @@ module.exports = (router) => {
                     res.status(500).send(err);
                 });
         })
+    router.route('/images')
         .post(upload.single('image'), (req, res, next) => {
             const normalizedObj = {
                 buffer: req.file.buffer,
