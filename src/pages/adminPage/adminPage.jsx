@@ -46,7 +46,7 @@ class AdminPage extends Component {
                     className={classnames({ active: this.state.activeTab === '1' })}
                     onClick={() => { this.toggle('1'); }}
                   >
-                    Users
+                    Пользователи
                 </NavLink>
                 </NavItem>
                 <NavItem>
@@ -54,7 +54,7 @@ class AdminPage extends Component {
                     className={classnames({ active: this.state.activeTab === '2' })}
                     onClick={() => { this.toggle('2'); }}
                   >
-                    Categories
+                    Категории
                 </NavLink>
                 </NavItem>
                 <NavItem>
@@ -62,7 +62,7 @@ class AdminPage extends Component {
                     className={classnames({ active: this.state.activeTab === '3' })}
                     onClick={() => { this.toggle('3'); }}
                   >
-                    Roles
+                    Роли
                 </NavLink>
                 </NavItem>
                 <NavItem>
@@ -70,7 +70,7 @@ class AdminPage extends Component {
                     className={classnames({ active: this.state.activeTab === '4' })}
                     onClick={() => { this.toggle('4'); }}
                   >
-                    Recipes
+                    Ингредиенты
                 </NavLink>
                 </NavItem>
                 <NavItem>
@@ -78,7 +78,7 @@ class AdminPage extends Component {
                     className={classnames({ active: this.state.activeTab === '5' })}
                     onClick={() => { this.toggle('5'); }}
                   >
-                    Ingredients
+                    Логи
                 </NavLink>
                 </NavItem>
               </Nav>
