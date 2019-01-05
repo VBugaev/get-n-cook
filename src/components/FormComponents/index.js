@@ -30,6 +30,7 @@ export const FormFileInput = ({
         onChange={adaptFileEventToValue(onChange)}
         onBlur={adaptFileEventToValue(onBlur)}
         type="file"
+        accept="image/jpeg,image/png,image/gif"
         {...props.input}
         {...props}
       />

@@ -83,7 +83,9 @@ class AdminPage extends Component {
                 </NavItem>
               </Nav>
               <TabContent activeTab={this.state.activeTab}>
-                <UsersTab tabId="1" />
+                <TabPane tabId="1">
+                  <UsersTab />
+                </TabPane>
                 <TabPane tabId="2">
                   <Row>
                     <Col sm="6">

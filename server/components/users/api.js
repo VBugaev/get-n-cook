@@ -5,36 +5,54 @@ module.exports = (router) => {
    router.route('/users')
       .get((req, res, next) => {
          usersDAL.getAllUsers()
-         .then(result => {
-            res.send(result);
-         })
-         .catch(err => {
-            res.status(500).send(err);
-         });
-      })
-      .delete((req, res, next) => {
-         usersDAL.deleteUser(req.body.id)
-         .then(() => res.status(200).send('Deleted'))
-         .catch(err => res.status(500).send(err));
-      });
-   router.route('/register')
-      .post((req, res, next) => {
-         usersController.register(req.body)
             .then(result => {
-               res.send(usersController.toAuthJSON(result));
+               res.send(result);
             })
             .catch(err => {
                res.status(500).send(err);
-            })
-
+            });
+      })
+      .delete((req, res, next) => {
+         usersDAL.deleteUser(req.body.id)
+            .then(() => res.status(200).send('Deleted'))
+            .catch(err => res.status(500).send(err));
       });
 
-      router.route('/login')
+   router.route('/user')
+      .post(async (req, res, next) => {
+         try {
+            const result = await usersController.register(req.body);
+            res.send(result);
+         } catch (error) {
+            res.status(500).send(error);
+         }
+      });
+   router.route('/register')
+      .post(async (req, res, next) => {
+         try {
+            console.log(req.body);
+            const result = await usersController.register(req.body);
+            if (result.error) {
+               res.send(result);
+            } else {
+               if (req.body.isCreatedByAdmin) {
+                  console.log(result);
+                  res.send(result);
+               } else {
+                  res.send(usersController.toAuthJSON(result));
+               }
+            }
+         } catch (error) {
+            res.status(500).send(error);
+         }
+      });
+
+   router.route('/login')
       .post(async (req, res, next) => {
          try {
             const result = await usersController.login(req.body);
             if (result) {
-               res.send(usersController.toAuthJSON(result));
+
             } else {
                res.send({
                   authenticated: false,

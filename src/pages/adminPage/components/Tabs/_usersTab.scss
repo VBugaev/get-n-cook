@@ -1,0 +1,8 @@
+.tab-alert {
+    animation: fading 2s linear;
+    animation-delay: 5s;
+}
+
+@keyframes fading {
+    100% { opacity: 0 }
+}

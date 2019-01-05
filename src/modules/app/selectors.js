@@ -1,0 +1,1 @@
+export const getAdminPage = (state) => state.adminPage;

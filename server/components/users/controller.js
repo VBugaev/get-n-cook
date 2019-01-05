@@ -1,15 +1,33 @@
 let usersDAL = require('./dal.js');
+let rolesDAL = require('../roles/dal.js');
 let bcrypt = require('bcrypt');
-let jwt = require('jsonwebtoken');
 let tokenHelper = require('./tokenHelper.js');
 let saltRounds = 10;
 
 const register = async (userData) => {
-    const hash = await bcrypt.hash(userData.password, saltRounds);
-    userData.password = hash;
-    return usersDAL.createUser(userData)
-        .then(result => result)
-        .catch(err => { throw err; });
+    userData.login = userData.login.toLowerCase();
+    const userEmail = await usersDAL.getUserByEmail(userData.email);
+    const userlogin = await usersDAL.getUserByLogin(userData.login);
+    if (userEmail || userlogin) {
+        return { error: 'Email или Login уже заняты' }
+    } else {
+        const hash = await bcrypt.hash(userData.password, saltRounds);
+        userData.password = hash;
+        if (!userData.isCreatedByAdmin) {
+            const roleResult = await rolesDAL.getRoleByTitle('User');
+            if (roleResult) {
+                userData.roleId = roleResult.Id;
+                return usersDAL.createUser(userData)
+                .then(result => result)
+                .catch(err => { throw err; });
+            }
+        } else {
+            return usersDAL.createUser(userData)
+            .then(result => result)
+            .catch(err => { throw err; });
+        }
+        return { error: 'Error in user creating' };
+    }
 };
 
 const login = async (loginData) => {

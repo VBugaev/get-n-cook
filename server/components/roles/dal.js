@@ -6,7 +6,6 @@ const getAllRoles = (filter) => {
         return pool.request()
             .execute('GetAllRoles');
     }).then(result => {
-        console.log(result.recordset);
         if (filter) {
             return result.recordset
             .filter(el => el.Title.includes(filter));
@@ -19,7 +18,19 @@ const getAllRoles = (filter) => {
         });
 };
 
-const createRole = title => {
+const getRoleByTitle = async (title) => {
+    try {
+        let connectedPool = await pool;
+        let result = await connectedPool.request()
+        .input('Title', sql.NVarChar(50), title)
+        .execute('GetRoleByTitle')
+        return result.recordset[0];
+    } catch (error) {
+        throw error;
+    }
+}
+
+const createRole = async (title) => {
     return pool.then(pool => {
         return pool.request()
             .input('Title', sql.NVarChar(50), title)
@@ -35,5 +46,6 @@ const createRole = title => {
 
 module.exports = {
     getAllRoles,
-    createRole
+    createRole,
+    getRoleByTitle
 };

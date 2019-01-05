@@ -29,6 +29,18 @@ const getUserByEmail = (email) => {
     })
 };
 
+const getUserByLogin = async (login) => {
+    try {
+        let connectedPool = await pool;
+        const result = await connectedPool.request()
+        .input('Login', sql.NVarChar(50), login)
+        .execute('GetUserByLogin');
+        return result.recordset[0];
+    } catch (error) {
+        throw error;
+    }
+}
+
 const getUserById = (id) => {
     return pool.then(pool => {
         return pool.request()
@@ -141,6 +153,7 @@ module.exports = {
     getAllUsers,
     getUserByEmail,
     getUserById,
+    getUserByLogin,
     createUser,
     updateUser,
     deleteUser,
