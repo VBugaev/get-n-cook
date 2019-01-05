@@ -4,45 +4,41 @@ import dayjs from 'dayjs';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { connect } from 'react-redux';
-import { getUsers, getRoles, createUserByAdmin } from '../../actions.js';
-import { getUsersData, getUserFormError } from '../../selectors.js';
+import { getUsers, getRoles, createUserByAdmin, openUpdateUserModal, toggleUsersUpdateModal, updateUserByAdmin } from '../../actions.js';
+import { getUsersData, getUserFormError, getIsUserModalOpened } from '../../selectors.js';
 
 import { Table, Row, Col, Alert, Button, Modal, ModalHeader, ModalBody } from 'reactstrap';
 
 import UsersAdminForm from '../Forms/userAdminForm';
+import UsersAdminUpdateForm from '../Forms/userAdminUpdateForm';
 
 import './_usersTab.scss';
 
 const mapStateToProps = (state) => ({
     users: getUsersData(state),
-    error: getUserFormError(state)
+    error: getUserFormError(state),
+    isModalOpened: getIsUserModalOpened(state)
 });
 
 const mapDispatchToProps = dispatch => ({
     getUsers: () => dispatch(getUsers()),
     getRoles: () => dispatch(getRoles()),
-    createUser: values => {
-        return dispatch(createUserByAdmin(values));
-    }
+    toggleModal: () => dispatch(toggleUsersUpdateModal()),
+    openUpdModal: (id) => dispatch(openUpdateUserModal(id)),
+    updateUser: (values, id) => dispatch(updateUserByAdmin(values, id)),
+    createUser: values => dispatch(createUserByAdmin(values))
 })
 
 class UsersTab extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            modal: false
+            updId: ''
         };
     }
-
     componentDidMount() {
         this.props.getUsers();
         this.props.getRoles();
-    }
-
-    toggle = () => {
-        this.setState({
-            modal: !this.state.modal
-        });
     }
     // onSubmit = values => {
     //     console.log(values);
@@ -62,6 +58,20 @@ class UsersTab extends Component {
     //             console.log(err);
     //         })
     // }
+
+    openUpdModal = (id) => {
+        this.setState({ updId: id });
+        this.props.openUpdModal(id);
+    }
+
+    toggleUpdModal = () => {
+        this.setState({ updId: '' });
+        this.props.toggleModal();
+    }
+
+    onUpdateUserSubmit = values => {
+        this.props.updateUser(values, this.state.updId);
+    }
 
     render() {
         const { users, error } = this.props;
@@ -93,7 +103,7 @@ class UsersTab extends Component {
                                         <td>{user.Surname}</td>
                                         <td>{user.RoleTitle}</td>
                                         <td>{user.UpdatedAt && dayjs(user.UpdatedAt).format('DD MMM YYYY HH:mm:ss')}</td>
-                                        <td><Button onClick={this.toggle}><FontAwesomeIcon icon="cog" /></Button></td>
+                                        <td><Button onClick={() => this.openUpdModal(user.Id)}><FontAwesomeIcon icon="cog" /></Button></td>
                                     </tr>
                                 );
                             })}
@@ -107,10 +117,10 @@ class UsersTab extends Component {
                     <UsersAdminForm onSubmit={this.props.createUser} />
                 </Col>
             </Row>
-            <Modal isOpen={this.state.modal} toggle={this.toggle} className={this.props.className}>
-                <ModalHeader toggle={this.toggle}>Обновить информацию о пользователе</ModalHeader>
+            <Modal isOpen={this.props.isModalOpened} toggle={this.toggleUpdModal} className={this.props.className}>
+                <ModalHeader toggle={this.toggleUpdModal}>Обновить информацию о пользователе</ModalHeader>
                 <ModalBody>
-                    <UsersAdminForm onSubmit={() => {}} />
+                    <UsersAdminUpdateForm onSubmit={this.onUpdateUserSubmit} />
                 </ModalBody>
             </Modal>
         </>

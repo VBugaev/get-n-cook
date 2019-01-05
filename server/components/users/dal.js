@@ -89,18 +89,16 @@ const updateUser = (userData) => {
     return pool.then(pool => {
         return pool.request()
             .input('Id', sql.UniqueIdentifier, userData.id)
-            .input('Login', sql.NVarChar(50), userData.login)
-            .input('Email', sql.NVarChar(sql.MAX), userData.email)
             .input('RoleId', sql.UniqueIdentifier, userData.roleId)
             .input('Name', sql.NVarChar(50), userData.name)
             .input('Surname', sql.NVarChar(50), userData.surname)
-            .input('AboutSection', sql.NVarChar(sql.MAX), userData.about)
             .execute('UpdateUserById')
     })
     .then(result => {
         return result.recordset[0];
     })
     .catch(err => {
+        console.log(err);
         throw err;
     });
 };

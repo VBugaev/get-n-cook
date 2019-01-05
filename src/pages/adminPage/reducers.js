@@ -8,7 +8,15 @@ const getDefaultModelCluster = () => ({
     error: ''
 });
 
-export const users = (state = getDefaultModelCluster(), action) => {
+const getUserModelCluster = () => ({
+    isLoading: false,
+    data: {},
+    updateData: {},
+    error: '',
+    isModalOpened: false
+});
+
+export const users = (state = getUserModelCluster(), action) => {
     switch (action.type) {
         case actionTypes.FETCH_USERS_START:
             return {
@@ -32,6 +40,16 @@ export const users = (state = getDefaultModelCluster(), action) => {
             newState.data[action.payload.updatedRow.Id] = action.payload.updatedRow;
             return newState;
         }
+        case actionTypes.TOGGLE_USERS_UPDATE_MODAL: 
+            return {
+                ...state,
+                isModalOpened: !state.isModalOpened
+            }
+        case actionTypes.FETCH_USER_UPDATE_DATA: 
+            return {
+                ...state,
+                updateData: action.payload.updateData
+            }
         default:
             return state;
     }

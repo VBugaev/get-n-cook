@@ -26,6 +26,24 @@ module.exports = (router) => {
          } catch (error) {
             res.status(500).send(error);
          }
+      })
+      .put(async (req, res, next) => {
+         try {
+            console.log(req.body);
+            const result = await usersController.updateUser(req.body);
+            if (result.error) {
+               res.send(result);
+            } else {
+               if (req.body.isUpdatedByAdmin) {
+                  res.send(result);
+               } else {
+                  res.send(usersController.toAuthJSON(result));
+               }
+            }
+         } catch (error) {
+            console.log(error);
+            res.status(500).send(error);
+         }
       });
    router.route('/register')
       .post(async (req, res, next) => {

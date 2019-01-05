@@ -1,5 +1,6 @@
 import * as actionTypes from './actionTypes';
 import { normalizeArray } from '../../utils/arrayUtils.js';
+import { getUserById } from './selectors';
 
 export const fetchUsersStart = () => ({
     type: actionTypes.FETCH_USERS_START
@@ -62,6 +63,29 @@ export const fetchRolesComplete = (data) => ({
     }
 });
 
+export const toggleUsersUpdateModal = () => ({
+    type: actionTypes.TOGGLE_USERS_UPDATE_MODAL
+});
+
+export const fetchUserUpdateData = (updateData) => ({
+    type: actionTypes.FETCH_USER_UPDATE_DATA,
+    payload: {
+        updateData
+    }
+});
+
+export const openUpdateUserModal = (id) => (dispatch, getState) => {
+    const state = getState();
+    const updatedUser = getUserById(state, id);
+    const updateData = {
+        name: updatedUser.Name,
+        surname: updatedUser.Surname,
+        roleId: updatedUser.RoleId
+    };
+    dispatch(fetchUserUpdateData(updateData));
+    dispatch(toggleUsersUpdateModal());
+}
+
 export const getUsers = () => dispatch => {
     dispatch(fetchUsersStart());
     fetch('api/users')
@@ -118,6 +142,27 @@ export const createUserByAdmin = (userData) => dispatch => {
             console.log(err);
         });
 };
+
+export const updateUserByAdmin = (userData, id) => dispatch => {
+    fetch('api/user', {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            ...userData,
+            isUpdatedByAdmin: true,
+            id
+        })
+    }).then(r => r.json())
+        .then(data => {
+            dispatch(fetchUpdatedUsersRow(data));
+            dispatch(toggleUsersUpdateModal());
+        })
+        .catch(err => {
+            console.log(err);
+        });
+}
 
 export const createCategoryByAdmin = (categoryData) => dispatch => {
 

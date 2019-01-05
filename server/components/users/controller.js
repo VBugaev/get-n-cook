@@ -30,6 +30,15 @@ const register = async (userData) => {
     }
 };
 
+const updateUser = async (userData) => {
+    try {
+       const result = usersDAL.updateUser(userData);
+       return result; 
+    } catch (error) {
+        throw error;
+    }
+}
+
 const login = async (loginData) => {
     const currentUser = await usersDAL.getUserByEmail(loginData.email);
     if (currentUser) {
@@ -54,5 +63,6 @@ const toAuthJSON = (userData) => {
 module.exports = {
     register,
     login,
+    updateUser,
     toAuthJSON
 };
