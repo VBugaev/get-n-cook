@@ -40,12 +40,12 @@ export const users = (state = getUserModelCluster(), action) => {
             newState.data[action.payload.updatedRow.Id] = action.payload.updatedRow;
             return newState;
         }
-        case actionTypes.TOGGLE_USERS_UPDATE_MODAL: 
+        case actionTypes.TOGGLE_USERS_UPDATE_MODAL:
             return {
                 ...state,
                 isModalOpened: !state.isModalOpened
             }
-        case actionTypes.FETCH_USER_UPDATE_DATA: 
+        case actionTypes.FETCH_USER_UPDATE_DATA:
             return {
                 ...state,
                 updateData: action.payload.updateData
@@ -87,6 +87,11 @@ export const categories = (state = getDefaultModelCluster(), action) => {
                 data: action.payload.data,
                 isLoading: false
             };
+        case actionTypes.FETCH_UPDATED_CATEGORIES_ROW: {
+            const newState = { ...state };
+            newState.data[action.payload.updatedRow.Id] = action.payload.updatedRow;
+            return newState;
+        }
         case actionTypes.CATEGORY_FORM_ERROR:
             return {
                 ...state,

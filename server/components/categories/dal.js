@@ -46,6 +46,20 @@ const deleteCategory = id => {
         });
 };
 
+const getCategoryByTitle = async title => {
+    try {
+        console.log(title);
+        let connectedPool = await pool;
+        let result = await connectedPool.request()
+        .input('Title', title)
+        .execute('GetCategoryByTitle');
+        return result.recordset[0];
+    } catch (error) {
+        console.log(error);
+        throw error;
+    }
+}
+
 const updateCategory = (updObj) => {
     return pool.then(pool => {
         return pool.request()
@@ -65,5 +79,6 @@ module.exports = {
     getAllCategories,
     createCategory,
     deleteCategory,
-    updateCategory
+    updateCategory,
+    getCategoryByTitle
 };

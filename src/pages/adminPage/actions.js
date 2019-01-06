@@ -165,5 +165,35 @@ export const updateUserByAdmin = (userData, id) => dispatch => {
 }
 
 export const createCategoryByAdmin = (categoryData) => dispatch => {
+    fetch('api/categories', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(categoryData)
+    }).then(r => r.json())
+        .then(data => {
+            if (data.error) {
+                dispatch(fetchCategoryFormError(data.error));
+            } else {
+                dispatch(fetchCategoryFormError(''));
+                dispatch(fetchUpdatedCategoriesRow(data));
+            }
 
+        })
+        .catch(err => {
+            console.log(err);
+        });
+};
+
+export const deleteCategoryByAdmin = (id) => dispatch => {
+    fetch(`api/categories?id=${id}`, {
+        method: 'DELETE'
+    })
+        .then(() => {
+            dispatch(getCategories());
+        })
+        .catch(err => {
+            console.log(err);
+        });
 }

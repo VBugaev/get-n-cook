@@ -1,16 +1,17 @@
 import React, { Component } from 'react'
 
-import { Table, Container, TabContent, TabPane, Nav, NavItem, NavLink, Row, Col, Button, Form, FormGroup, Input } from 'reactstrap';
+import { Container, TabContent, TabPane, Nav, NavItem, NavLink, Row, Col } from 'reactstrap';
 import classnames from 'classnames';
 
 import UsersTab from './components/Tabs/usersTab';
+import RolesTab from './components/Tabs/rolesTab';
+import CategoriesTab from './components/Tabs/categoriesTab';
 
 class AdminPage extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      activeTab: '1',
-      roles: []
+      activeTab: '1'
     };
   }
 
@@ -34,7 +35,6 @@ class AdminPage extends Component {
 
 
   render() {
-    const { roles } = this.state;
     return (
       <div className="App">
         <Container fluid={true}>
@@ -87,46 +87,10 @@ class AdminPage extends Component {
                   <UsersTab />
                 </TabPane>
                 <TabPane tabId="2">
-                  <Row>
-                    <Col sm="6">
-
-                    </Col>
-                    <Col sm="6">
-
-                    </Col>
-                  </Row>
+                  <CategoriesTab />
                 </TabPane>
                 <TabPane tabId="3">
-                  <Row>
-                    <Col sm="12">
-                      <h3 className="display-4 p-3">Roles management</h3>
-                    </Col>
-                    <Col sm="6">
-                      <Table>
-                        <tbody>
-                          <tr>
-                            <th>Title</th>
-                          </tr>
-                          {roles.map(role => {
-                            return (
-                              <tr key={role.Id}>
-                                <td>{role.Title}</td>
-                              </tr>
-                            );
-                          })}
-                        </tbody>
-                      </Table>
-                    </Col>
-                    <Col sm="6">
-                      <Form>
-                        <FormGroup>
-                          <h5 className="display-5">Create Role</h5>
-                          <Input name="title" placeholder="type role's title" />
-                        </FormGroup>
-                        <Button block>Create role</Button>
-                      </Form>
-                    </Col>
-                  </Row>
+                  <RolesTab />
                 </TabPane>
               </TabContent>
             </Col>

@@ -38,7 +38,6 @@ class UsersTab extends Component {
     }
     componentDidMount() {
         this.props.getUsers();
-        this.props.getRoles();
     }
     // onSubmit = values => {
     //     console.log(values);
@@ -103,7 +102,7 @@ class UsersTab extends Component {
                                         <td>{user.Surname}</td>
                                         <td>{user.RoleTitle}</td>
                                         <td>{user.UpdatedAt && dayjs(user.UpdatedAt).format('DD MMM YYYY HH:mm:ss')}</td>
-                                        <td><Button onClick={() => this.openUpdModal(user.Id)}><FontAwesomeIcon icon="cog" /></Button></td>
+                                        <td><Button onClick={() => this.openUpdModal(user.Id)}><FontAwesomeIcon icon="edit" /></Button></td>
                                     </tr>
                                 );
                             })}
