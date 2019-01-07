@@ -6,3 +6,15 @@
 @keyframes fading {
     100% { opacity: 0 }
 }
+
+.ingredients-table {
+    table-layout: fixed;
+}
+
+.image-col {
+    width: 150px;
+}
+
+.fit-image {
+    width: 100%;
+}

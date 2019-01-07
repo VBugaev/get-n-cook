@@ -9,6 +9,8 @@ import { getIngredientsData, getIngredientFormError } from '../../selectors.js';
 import { Table, Row, Col, Alert, Button } from 'reactstrap';
 import IngredientAdminForm from '../Forms/ingredientAdminForm';
 
+import './ingredientsTab.scss';
+
 const mapStateToProps = (state) => ({
     ingredients: getIngredientsData(state),
     error: getIngredientFormError(state)
@@ -33,7 +35,8 @@ class IngredientsTab extends Component {
                     <h3 className="display-4 p-3">Управление ингредиентами</h3>
                 </Col>
                 <Col sm="6">
-                    <Table>
+                    <Table className="ingredients-table">
+                        <col className="image-col" />
                         <tbody>
                             <tr>
                                 <th></th>
@@ -43,7 +46,7 @@ class IngredientsTab extends Component {
                             {ingredients.map(ingredient => {
                                 return (
                                     <tr key={ingredient.Id}>
-                                        <td><img src={`api/image/${ingredient.Id}`} alt="ingredient avatar"/></td>
+                                        <td><img className="fit-image" src={`api/image/${ingredient.Id}`} alt="ingredient avatar"/></td>
                                         <td>{ingredient.Title}</td>
                                     </tr>
                                 );

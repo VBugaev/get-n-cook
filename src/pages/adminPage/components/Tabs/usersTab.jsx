@@ -12,8 +12,6 @@ import { Table, Row, Col, Alert, Button, Modal, ModalHeader, ModalBody } from 'r
 import UsersAdminForm from '../Forms/userAdminForm';
 import UsersAdminUpdateForm from '../Forms/userAdminUpdateForm';
 
-import './_usersTab.scss';
-
 const mapStateToProps = (state) => ({
     users: getUsersData(state),
     error: getUserFormError(state),
@@ -39,24 +37,7 @@ class UsersTab extends Component {
     componentDidMount() {
         this.props.getUsers();
     }
-    // onSubmit = values => {
-    //     console.log(values);
-    //     console.log(values.userAvatar);
-    //     let form = new FormData();
-    //     form.append('image', values.userAvatar);
-    //     fetch('api/images', {
-    //         method: 'POST',
-    //         body: form
-    //     }).then(r => r.json())
-    //         .then(data => {
-    //             if (data.error) {
-    //                 this.setState({ error: data.error });
-    //             }
-    //         })
-    //         .catch(err => {
-    //             console.log(err);
-    //         })
-    // }
+
 
     openUpdModal = (id) => {
         this.setState({ updId: id });
