@@ -79,14 +79,17 @@ class CreateRecipePage extends Component {
                             <h3 className="display-4 p-3">Создать рецепт</h3>
                         </Col>
                         <Col sm="12">
-                            <CreateRecipeForm onSubmit={() => { }} />
-                            {values(selectedCategories).map(category => (
-                                <Alert key={category.Id} color="info" toggle={() => { this.clientDeleteCategory(category.Id) }}>
-                                    {category.Title}
-                                </Alert>
-                            ))}
-                            <ConnectedUserRolesSelect onChangeHandler={this.onCategoriesChangeHandler} selectedIds={selectedIds} />
-                            { selectedIds.length < 4 && <Button onClick={this.clientAddCategory}>Добавить категорию</Button>}
+                            <Row><Col sm="8" style={{ marginBottom: "10px" }}><ConnectedUserRolesSelect onChangeHandler={this.onCategoriesChangeHandler} selectedIds={selectedIds} /></Col>
+                                {selectedIds.length < 4 && <Col sm="4"><Button onClick={this.clientAddCategory}>Добавить категорию</Button></Col>}
+                                <Col sm="12">
+                                    {values(selectedCategories).map(category => (
+                                        <Alert key={category.Id} color="info" toggle={() => { this.clientDeleteCategory(category.Id) }}>
+                                            {category.Title}
+                                        </Alert>
+                                    ))}
+                                </Col>
+                                <Col sm="12"><CreateRecipeForm onSubmit={() => { }} /></Col>
+                            </Row>
                         </Col>
                     </Row>
                 </Container>

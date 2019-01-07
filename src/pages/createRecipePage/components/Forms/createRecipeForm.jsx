@@ -1,7 +1,7 @@
 import React from 'react';
-import { FormGroup, Button, Input } from 'reactstrap';
+import { FormGroup, Button, Input, Label } from 'reactstrap';
 import { Field, reduxForm } from 'redux-form';
-import { FormInput } from '../../../../components/FormComponents';
+import { FormInput, FormFileInput } from '../../../../components/FormComponents';
 import * as validators from '../../../../utils/formValidators.js';
 
 const DifficultiesSelect = (props) => {
@@ -29,6 +29,23 @@ const CreateRecipeForm = (props) => {
             </FormGroup>
             <FormGroup>
                 <Field validate={[validators.required]} name="preparationTime" component={FormInput} type="number" placeholder="Введите время приготовления (в минутах)" />
+            </FormGroup>
+            <FormGroup>
+                <Label>Изображение для превью</Label>
+                <div><Field validate={[validators.required]} name="previewImage" component={FormFileInput} /></div>
+                
+            </FormGroup>
+            <FormGroup>
+                <Label>Доп изображение 1</Label>
+                <div><Field validate={[validators.required]} name="sideImage1" component={FormFileInput} /></div>
+            </FormGroup>
+            <FormGroup>
+                <Label>Доп изображение 2</Label>
+                <div><Field validate={[validators.required]} name="sideImage2" component={FormFileInput} /></div>
+            </FormGroup>
+            <FormGroup>
+                <Label>Доп изображение 3</Label>
+                <div><Field validate={[validators.required]} name="sideImage3" component={FormFileInput} /></div>
             </FormGroup>
             <Button disabled={props.submitting}>Создать рецепт</Button>
         </form>);

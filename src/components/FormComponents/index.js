@@ -1,6 +1,5 @@
 import React from 'react';
 import { Input } from 'reactstrap';
-import { Field, reduxForm } from 'redux-form';
 
 export const FormCheckbox = ({ input, meta: { touched, error, warning } }) => (<>
     <Input {...input} type="checkbox" />
@@ -36,20 +35,3 @@ export const FormFileInput = ({
       />
     );
   };
-  
-  export const FileUpload = (props) => {
-      return (
-            <form encType="multipart/form-data" onSubmit={props.handleSubmit}>
-              <div>
-                <label>User Avatar</label>
-                <Field name="login" component={FormInput} placeholder="Login"/>
-                <Field name="userAvatar" component={FormFileInput} type="file"/>
-              </div>
-              <button type="submit">Submit</button>
-            </form>
-      )
-  }
-  
-  export default reduxForm({
-      form: 'fileupload'
-  })(FileUpload)
