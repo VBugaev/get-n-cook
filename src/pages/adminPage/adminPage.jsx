@@ -6,6 +6,7 @@ import classnames from 'classnames';
 import UsersTab from './components/Tabs/usersTab';
 import RolesTab from './components/Tabs/rolesTab';
 import CategoriesTab from './components/Tabs/categoriesTab';
+import IngredientsTab from './components/Tabs/ingredientsTab';
 
 class AdminPage extends Component {
   constructor(props) {
@@ -91,6 +92,9 @@ class AdminPage extends Component {
                 </TabPane>
                 <TabPane tabId="3">
                   <RolesTab />
+                </TabPane>
+                <TabPane tabId="4">
+                  <IngredientsTab />
                 </TabPane>
               </TabContent>
             </Col>

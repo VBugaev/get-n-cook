@@ -1,5 +1,6 @@
 const router = require('express').Router();
 
+require('./components/ingredients/api.js')(router);
 require('./components/categories/api.js')(router);
 require('./components/users/api.js')(router);
 require('./components/roles/api.js')(router);

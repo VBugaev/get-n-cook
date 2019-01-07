@@ -102,8 +102,33 @@ export const categories = (state = getDefaultModelCluster(), action) => {
     }
 }
 
+export const ingredients = (state = getDefaultModelCluster(), action) => {
+    switch (action.type) {
+        case actionTypes.FETCH_INGREDIENTS_COMPLETE:
+            return {
+                ...state,
+                error: '',
+                data: action.payload.data,
+                isLoading: false
+            };
+        case actionTypes.FETCH_UPDATED_INGREDIENTS_ROW: {
+            const newState = { ...state };
+            newState.data[action.payload.updatedRow.Id] = action.payload.updatedRow;
+            return newState;
+        }
+        case actionTypes.INGREDIENT_FORM_ERROR:
+            return {
+                ...state,
+                error: action.payload.error
+            }
+        default:
+            return state;
+    }
+}
+
 export default combineReducers({
     users,
     roles,
-    categories
+    categories, 
+    ingredients
 });

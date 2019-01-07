@@ -16,9 +16,10 @@ const getImageById = (id) => {
         })
 };
 
-const uploadImage = (imageData) => {
+const uploadImage = (imageData, id = null) => {
     return pool.then(pool => {
         return pool.request()
+          .input('Id', sql.UniqueIdentifier, id)
           .input('BinaryData', sql.VarBinary(sql.MAX), imageData.buffer)
           .input('FileName', sql.NVarChar(sql.MAX), imageData.originalname)
           .input('MIMEType', sql.NVarChar(50), imageData.mimetype)

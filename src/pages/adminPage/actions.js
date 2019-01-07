@@ -13,6 +13,13 @@ export const fetchUsersComplete = (data) => ({
     }
 });
 
+export const fetchIngredientsComplete = (data) => ({
+    type: actionTypes.FETCH_INGREDIENTS_COMPLETE,
+    payload: {
+        data: data.length ? normalizeArray(data) : {}
+    }
+});
+
 export const fetchUserFormError = (error) => ({
     type: actionTypes.USER_FORM_ERROR,
     payload: {
@@ -52,6 +59,13 @@ export const fetchCategoryFormError = (error) => ({
     }
 });
 
+export const fetchIngredientFormError = (error) => ({
+    type: actionTypes.INGREDIENT_FORM_ERROR,
+    payload: {
+        error
+    }
+});
+
 export const fetchRolesStart = () => ({
     type: actionTypes.FETCH_ROLES_START
 });
@@ -71,6 +85,13 @@ export const fetchUserUpdateData = (updateData) => ({
     type: actionTypes.FETCH_USER_UPDATE_DATA,
     payload: {
         updateData
+    }
+});
+
+export const fetchUpdatedIngredientsRow = (updatedRow) => ({
+    type: actionTypes.FETCH_UPDATED_INGREDIENTS_ROW,
+    payload: {
+        updatedRow
     }
 });
 
@@ -196,4 +217,39 @@ export const deleteCategoryByAdmin = (id) => dispatch => {
         .catch(err => {
             console.log(err);
         });
-}
+};
+
+export const getIngredients = () => dispatch => {
+    fetch('api/ingredients')
+        .then(res => {
+            return res.json();
+        })
+        .then(values => {
+            dispatch(fetchIngredientsComplete(values));
+        });
+};
+
+export const deleteIngredient = () => {};
+
+export const createIngredient = (values) => dispatch => {
+        console.log(values);
+        console.log(values.ingredientImage);
+        let form = new FormData();
+        form.append('title', values.title);
+        form.append('image', values.ingredientImage);
+        fetch('api/ingredients', {
+            method: 'POST',
+            body: form
+        }).then(r => r.json())
+            .then(data => {
+                if (data.error) {
+                    dispatch(fetchIngredientFormError(data.error));
+                } else {
+                    dispatch(fetchIngredientFormError(''));
+                    dispatch(fetchUpdatedIngredientsRow(data));
+                }
+            })
+            .catch(err => {
+                console.log(err);
+            })
+};

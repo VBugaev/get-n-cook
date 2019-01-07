@@ -30,7 +30,7 @@ class RolesTab extends Component {
                     <Table>
                         <tbody>
                             <tr>
-                                <th>Title</th>
+                                <th>Название роли</th>
                             </tr>
                             {roles.map(role => {
                                 return (

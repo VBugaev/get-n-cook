@@ -11,6 +11,7 @@ const getAllIngredients = async (filter) => {
         }
         return result.recordset;
     } catch (error) {
+        console.log(error);
         throw error;
     }
 };
@@ -37,10 +38,23 @@ const createIngredient = async (title) => {
     } catch (error) {
         throw error;
     }
+};
+
+const deleteIngredient = async (id) => {
+    try {
+        let connectedPool = await pool;
+        const result = await connectedPool.request()
+                            .input('IngredientId', sql.UniqueIdentifier, id)
+                            .execute('DeleteIngredient');
+        return true;
+    } catch (error) {
+        throw error;
+    }
 }
 
 module.exports = {
     getAllIngredients,
     getIngredientById,
-    createIngredient
+    createIngredient,
+    deleteIngredient
 };

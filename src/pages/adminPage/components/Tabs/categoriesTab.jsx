@@ -36,7 +36,7 @@ class CategoriesTab extends Component {
                     <Table>
                         <tbody>
                             <tr>
-                                <th>Title</th>
+                                <th>Название категории</th>
                                 <th></th>
                             </tr>
                             {categories.map(category => {
