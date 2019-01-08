@@ -28,7 +28,8 @@ const DifficultiesSelect = (props) => {
     </>);
 }
 
-const maxMulti4 = validators.maxMulti(4)
+const maxMulti4 = validators.maxMulti(4);
+const maxMulti10 = validators.maxMulti(10);
 
 const CreateRecipeForm = (props) => {
     const hasSelectedIngredients = !!props.selectedIngredients;
@@ -63,7 +64,7 @@ const CreateRecipeForm = (props) => {
             <div><Field name="sideImage3" component={FormFileInput} /></div>
         </FormGroup>
         <FormGroup>
-            <Field validate={[validators.multiRequired, maxMulti4]} name="ingredients" component={FormAdvancedSelect} options={props.ingredients} isMulti={true} placeholder="Выберите ингредиенты для рецепта" />
+            <Field validate={[validators.multiRequired, maxMulti10]} name="ingredients" component={FormAdvancedSelect} options={props.ingredients} isMulti={true} placeholder="Выберите ингредиенты для рецепта" />
         </FormGroup>
         {hasSelectedIngredients && (props.selectedIngredients.length ?
             (<>
