@@ -1,5 +1,15 @@
 import React from 'react';
 import { Input } from 'reactstrap';
+import Select, { components } from 'react-select';
+
+// const CustomMultiValueContainer = (props) => {
+//     return (
+//         <components.MultiValueContainer {...props}>
+//             <div>{props.children}</div>
+//             <Input />
+//         </components.MultiValueContainer>
+//     )
+// } 
 
 export const FormCheckbox = ({ input, meta: { touched, error, warning } }) => (<>
     <Input {...input} type="checkbox" />
@@ -19,12 +29,24 @@ export const FormInput = ({ input, disabled, className, placeholder, type,
 
 const adaptFileEventToValue = delegate => e => delegate(e.target.files[0]);
 
+export const FormAdvancedSelect = ({input, isMulti, placeholder, disabled, options, meta: { touched, error, warning } }) => (<>
+    <Select
+//   components={{MultiValueContainer: CustomMultiValueContainer}}
+  onChange={input.onChange}
+  onBlur={() => input.onBlur(input.value)}
+  options={options}
+  isMulti={isMulti}
+  placeholder={placeholder}
+/>
+    {touched && ((error && <span className="text-danger">{error}</span>) || (warning && <span>{warning}</span>))}
+</>);
+
 export const FormFileInput = ({ 
     input: { value: omitValue, onChange, onBlur, ...inputProps }, 
-    meta: omitMeta, 
+    meta: { touched, error, warning }, 
     ...props 
   }) => {
-    return (
+    return (<>
       <input
         onChange={adaptFileEventToValue(onChange)}
         onBlur={adaptFileEventToValue(onBlur)}
@@ -33,5 +55,6 @@ export const FormFileInput = ({
         {...props.input}
         {...props}
       />
-    );
+       {touched && ((error && <span className="text-danger">{error}</span>) || (warning && <span>{warning}</span>))}
+    </>);
   };

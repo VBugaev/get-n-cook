@@ -36,8 +36,8 @@ class IngredientsTab extends Component {
                 </Col>
                 <Col sm="6">
                     <Table className="ingredients-table">
-                        <col className="image-col" />
                         <tbody>
+                            <col className="image-col" />
                             <tr>
                                 <th></th>
                                 <th>Название ингредиента</th>

@@ -1,55 +1,93 @@
 import React from 'react';
 import { FormGroup, Button, Input, Label } from 'reactstrap';
-import { Field, reduxForm } from 'redux-form';
-import { FormInput, FormFileInput } from '../../../../components/FormComponents';
+import { Field, reduxForm, formValueSelector } from 'redux-form';
+import { FormInput, FormFileInput, FormAdvancedSelect } from '../../../../components/FormComponents';
 import * as validators from '../../../../utils/formValidators.js';
+import Select from 'react-select';
+import { connect } from 'react-redux';
 
 const DifficultiesSelect = (props) => {
-    const { input, meta: { touched, error, warning } } = props;
+    const { input, meta: { touched, error, warning }, placeholder } = props;
+    const options = [
+        { value: 1, label: 'Очень простой в приготовлении' },
+        { value: 2, label: 'Простой в приготовлении' },
+        { value: 3, label: 'Посложнее простого' },
+        { value: 4, label: 'Средней сложности' },
+        { value: 5, label: 'Сложный в приготовлении' }
+    ];
     return (<>
-        <Input type="select" name="select" id="rolesSelect" {...input}>
-            <option value=''>Выберите сложность</option>
-            <option value='1'>Очень простой в приготовлении</option>
-            <option value='2'>Простой в приготовлении</option>
-            <option value='3'>Посложнее простого</option>
-            <option value='4'>Средней сложности</option>
-            <option value='5'>Сложный в приготовлении</option>
-        </Input>
+        <Select
+            options={options}
+            isMulti={false}
+            value={input.value}
+            onChange={input.onChange}
+            onBlur={() => input.onBlur(input.value)}
+            placeholder={placeholder}
+        />
         {touched && ((error && <span className="text-danger">{error}</span>) || (warning && <span>{warning}</span>))}
     </>);
 }
 
+const maxMulti4 = validators.maxMulti(4)
+
 const CreateRecipeForm = (props) => {
-    return (<form onSubmit={props.handleSubmit} action="POST">
-            <FormGroup>
-                <Field validate={[validators.required]} name="title" component={FormInput} type="text" placeholder="Введите название рецепта" />
-            </FormGroup>
-            <FormGroup>
-                <Field validate={[validators.required]} name="difficulty" component={DifficultiesSelect} />
-            </FormGroup>
-            <FormGroup>
-                <Field validate={[validators.required]} name="preparationTime" component={FormInput} type="number" placeholder="Введите время приготовления (в минутах)" />
-            </FormGroup>
-            <FormGroup>
-                <Label>Изображение для превью</Label>
-                <div><Field validate={[validators.required]} name="previewImage" component={FormFileInput} /></div>
-                
-            </FormGroup>
-            <FormGroup>
-                <Label>Доп изображение 1</Label>
-                <div><Field validate={[validators.required]} name="sideImage1" component={FormFileInput} /></div>
-            </FormGroup>
-            <FormGroup>
-                <Label>Доп изображение 2</Label>
-                <div><Field validate={[validators.required]} name="sideImage2" component={FormFileInput} /></div>
-            </FormGroup>
-            <FormGroup>
-                <Label>Доп изображение 3</Label>
-                <div><Field validate={[validators.required]} name="sideImage3" component={FormFileInput} /></div>
-            </FormGroup>
-            <Button disabled={props.submitting}>Создать рецепт</Button>
-        </form>);
+    const hasSelectedIngredients = !!props.selectedIngredients;
+    return (<form style={{ marginBottom: "30px" }} onSubmit={props.handleSubmit} action="POST">
+        <FormGroup>
+            <Field validate={[validators.multiRequired, maxMulti4]} name="categories" component={FormAdvancedSelect} options={props.categories} isMulti={true} placeholder="Выберите категории для рецепта" />
+        </FormGroup>
+        <FormGroup>
+            <Field validate={[validators.required]} name="title" component={FormInput} type="text" placeholder="Введите название рецепта" />
+        </FormGroup>
+        <FormGroup>
+            <Field validate={[validators.required]} name="difficulty" component={DifficultiesSelect} placeholder="Выберите сложность" />
+        </FormGroup>
+        <FormGroup>
+            <Field validate={[validators.required]} name="preparationTime" component={FormInput} type="number" placeholder="Введите время приготовления (в минутах)" />
+        </FormGroup>
+        <FormGroup>
+            <Label>Изображение для превью</Label>
+            <div><Field validate={[validators.required]} name="previewImage" component={FormFileInput} /></div>
+
+        </FormGroup>
+        <FormGroup>
+            <Label>Доп изображение 1</Label>
+            <div><Field validate={[validators.required]} name="sideImage1" component={FormFileInput} /></div>
+        </FormGroup>
+        <FormGroup>
+            <Label>Доп изображение 2</Label>
+            <div><Field validate={[validators.required]} name="sideImage2" component={FormFileInput} /></div>
+        </FormGroup>
+        <FormGroup>
+            <Label>Доп изображение 3</Label>
+            <div><Field validate={[validators.required]} name="sideImage3" component={FormFileInput} /></div>
+        </FormGroup>
+        <FormGroup>
+            <Field validate={[validators.multiRequired, maxMulti4]} name="ingredients" component={FormAdvancedSelect} options={props.ingredients} isMulti={true} placeholder="Выберите ингредиенты для рецепта" />
+        </FormGroup>
+        {hasSelectedIngredients && (props.selectedIngredients.length ?
+            (<>
+                <h5>Введите граммовки для добавленных ингредиентов</h5>
+                {props.selectedIngredients.map(i => {
+                    if (i) {
+                    return (<FormGroup key={i.value}>
+                        <Field key={i.Id} validate={[validators.required]} name={i.value} component={FormInput} placeholder={`Граммовки для ${i.label}`} />
+                   </FormGroup>);
+                    }
+                })}
+            </>) : null)
+        }
+        <Button disabled={props.submitting}>Создать рецепт</Button>
+    </form>);
 };
-export default reduxForm({
-    form: 'users-admin-update'
+const ReduxCreateRecipeForm = reduxForm({
+    form: 'create-recipe'
 })(CreateRecipeForm);
+
+const selector = formValueSelector('create-recipe');
+
+const mapStateToProps = state => ({
+    selectedIngredients: selector(state, 'ingredients')
+});
+
+export default connect(mapStateToProps)(ReduxCreateRecipeForm);

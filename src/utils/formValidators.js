@@ -1,4 +1,7 @@
 export const required = value => (value || typeof value === 'number' ? undefined : 'Необходимое поле')
+export const multiRequired = value => value && value.length ? undefined : 'Необходимое поле';
+export const minMulti = min => value => value && value.length < min ? `Минимальное количество : ${min}` : undefined;
+export const maxMulti = max => value => value && value.length > max ? `Максимальное количество : ${max}` : undefined; 
 export const maxLength = max => value => value && value.length > max ? `Максимальная длина ${max} символов` : undefined
 export const minLength = min => value => value && value.length < min ? `Минимальная длина ${min} символов` : undefined
 export const number = value => value && isNaN(Number(value)) ? 'Только цифры' : undefined
