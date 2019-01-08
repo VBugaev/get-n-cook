@@ -52,15 +52,15 @@ const CreateRecipeForm = (props) => {
         </FormGroup>
         <FormGroup>
             <Label>Доп изображение 1</Label>
-            <div><Field validate={[validators.required]} name="sideImage1" component={FormFileInput} /></div>
+            <div><Field name="sideImage1" component={FormFileInput} /></div>
         </FormGroup>
         <FormGroup>
             <Label>Доп изображение 2</Label>
-            <div><Field validate={[validators.required]} name="sideImage2" component={FormFileInput} /></div>
+            <div><Field name="sideImage2" component={FormFileInput} /></div>
         </FormGroup>
         <FormGroup>
             <Label>Доп изображение 3</Label>
-            <div><Field validate={[validators.required]} name="sideImage3" component={FormFileInput} /></div>
+            <div><Field name="sideImage3" component={FormFileInput} /></div>
         </FormGroup>
         <FormGroup>
             <Field validate={[validators.multiRequired, maxMulti4]} name="ingredients" component={FormAdvancedSelect} options={props.ingredients} isMulti={true} placeholder="Выберите ингредиенты для рецепта" />
@@ -69,11 +69,9 @@ const CreateRecipeForm = (props) => {
             (<>
                 <h5>Введите граммовки для добавленных ингредиентов</h5>
                 {props.selectedIngredients.map(i => {
-                    if (i) {
                     return (<FormGroup key={i.value}>
                         <Field key={i.Id} validate={[validators.required]} name={i.value} component={FormInput} placeholder={`Граммовки для ${i.label}`} />
                    </FormGroup>);
-                    }
                 })}
             </>) : null)
         }

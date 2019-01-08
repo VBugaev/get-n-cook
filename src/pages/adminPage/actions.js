@@ -232,8 +232,6 @@ export const getIngredients = () => dispatch => {
 export const deleteIngredient = () => {};
 
 export const createIngredient = (values) => dispatch => {
-        console.log(values);
-        console.log(values.ingredientImage);
         let form = new FormData();
         form.append('title', values.title);
         form.append('image', values.ingredientImage);

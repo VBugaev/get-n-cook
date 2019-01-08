@@ -23,6 +23,47 @@ class CreateRecipePage extends Component {
         this.props.fetchIngredients();
     }
 
+    onRecipeSubmit = values => {
+        let form = new FormData();
+        let counter = 1;
+        form.append('title', values.title);
+        form.append('difficulty', +values.difficulty.value);
+        form.append('preparationTime', values.preparationTime);
+        form.append('previewImage', values.previewImage);
+        if (values.sideImage1) {
+            form.append('sideImage1', values.sideImage1);
+        }
+        if (values.sideImage2) {
+            form.append('sideImage2', values.sideImage2);
+        }
+        if (values.sideImage3) {
+            form.append('sideImage3', values.sideImage3);
+        }
+        if (values.categories && values.categories.length) {
+            counter = 1;
+            values.categories.forEach(c => {
+                form.append(`category${counter}`, c.value);
+                counter++;
+            });
+        }
+        if (values.ingredients && values.ingredients.length) {
+            counter = 1;
+            values.ingredients.forEach(i => {
+                form.append(`ingredient${counter}`, `${i.value}:${values[i.value]}`);
+                counter++;
+            })
+        }
+        fetch('api/recipes', {
+            method: 'POST',
+            body: form
+        }).then(r => r.json())
+            .then(data => {
+            })
+            .catch(err => {
+                console.log(err);
+            })
+    }
+
     render() {
         const categoriesForSelect = this.props.categories.map(c => ({
             value: c.Id,
@@ -41,7 +82,7 @@ class CreateRecipePage extends Component {
                         </Col>
                         <Col sm="12">
                             <Row>
-                                <Col sm="12"><CreateRecipeForm ingredients={ingredientsForSelect} categories={categoriesForSelect} onSubmit={(values) => { console.log(values); }} /></Col>
+                                <Col sm="12"><CreateRecipeForm ingredients={ingredientsForSelect} categories={categoriesForSelect} onSubmit={this.onRecipeSubmit} /></Col>
                             </Row>
                         </Col>
                     </Row>

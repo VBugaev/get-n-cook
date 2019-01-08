@@ -6,6 +6,7 @@ const getAllIngredients = async (filter) => {
         let connectedPool = await pool;
         const result = await connectedPool.request()
                             .execute('GetAllIngredients');
+        
         if (filter) {
             return result.recordset.filter(ingredient => ingredient.Title.includes(filter));
         }
