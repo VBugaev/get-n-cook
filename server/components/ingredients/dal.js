@@ -33,7 +33,7 @@ const createIngredient = async (title) => {
     try {
         let connectedPool = await pool;
         const result = await connectedPool.request()
-                            .input('Title', sql.NVarChar(50), title)
+                            .input('Title', sql.NVarChar(50), title.trim())
                             .execute('CreateIngredient');
         return result.recordset[0];
     } catch (error) {

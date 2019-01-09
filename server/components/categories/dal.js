@@ -21,7 +21,7 @@ const getAllCategories = (filterTitle) => {
 const createCategory = title => {
     return pool.then(pool => {
         return pool.request()
-            .input('Title', sql.NVarChar(100), title)
+            .input('Title', sql.NVarChar(100), title.trim())
             .execute('CreateCategory');
     }).then(result => {
         return result.recordset[0];
@@ -64,7 +64,7 @@ const updateCategory = (updObj) => {
     return pool.then(pool => {
         return pool.request()
             .input('CategoryId', sql.UniqueIdentifier, updObj.id)
-            .input('Title', sql.NVarChar(100), updObj.title)
+            .input('Title', sql.NVarChar(100), updObj.title.trim())
             .execute('UpdateCategoryById');
     }).then(result => {
         return result.recordset[0];

@@ -76,6 +76,22 @@ const CreateRecipeForm = (props) => {
                 })}
             </>) : null)
         }
+        <h5>Добавьте описание приготовления</h5>
+        <FormGroup>
+            <Field validate={[validators.required]} name="step1" component={FormInput} type="textarea" placeholder="Введите шаг 1" />
+        </FormGroup>
+        { props.step1 && (<FormGroup>
+            <Field validate={[validators.required]} name="step2" component={FormInput} type="textarea" placeholder="Введите шаг 2" />
+        </FormGroup>) }
+        {props.step2 && (<FormGroup>
+            <Field validate={[validators.required]} name="step3" component={FormInput} type="textarea" placeholder="Введите шаг 3" />
+        </FormGroup>) }
+        {props.step3 && (<FormGroup>
+            <Field validate={[validators.required]} name="step4" component={FormInput} type="textarea" placeholder="Введите шаг 4" />
+        </FormGroup>) }
+        {props.step4 && (<FormGroup>
+            <Field validate={[validators.required]} name="step5" component={FormInput} type="textarea" placeholder="Введите шаг 5" />
+        </FormGroup>) }
         <Button disabled={props.submitting}>Создать рецепт</Button>
     </form>);
 };
@@ -86,7 +102,12 @@ const ReduxCreateRecipeForm = reduxForm({
 const selector = formValueSelector('create-recipe');
 
 const mapStateToProps = state => ({
-    selectedIngredients: selector(state, 'ingredients')
+    selectedIngredients: selector(state, 'ingredients'),
+    step1: selector(state, 'step1'),
+    step2: selector(state, 'step2'),
+    step3: selector(state, 'step3'),
+    step4: selector(state, 'step4'),
+    step5: selector(state, 'step5')
 });
 
 export default connect(mapStateToProps)(ReduxCreateRecipeForm);

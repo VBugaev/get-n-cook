@@ -18,7 +18,7 @@ const getAllUsers = () => {
 const getUserByEmail = (email) => {
     return pool.then(pool => {
         return pool.request()
-            .input('Email', sql.NVarChar(sql.MAX), email)
+            .input('Email', sql.NVarChar(sql.MAX), email.trim())
             .execute('GetUserByEmail');
     }).then(result => {
         return result.recordset[0];
@@ -33,7 +33,7 @@ const getUserByLogin = async (login) => {
     try {
         let connectedPool = await pool;
         const result = await connectedPool.request()
-        .input('Login', sql.NVarChar(50), login)
+        .input('Login', sql.NVarChar(50), login.trim())
         .execute('GetUserByLogin');
         return result.recordset[0];
     } catch (error) {
@@ -59,13 +59,13 @@ const createUser = async (userData) => {
     try {
         let connectedPool = await pool;
         const result = await connectedPool.request()
-        .input('Login', sql.NVarChar(50), userData.login)
-        .input('Email', sql.NVarChar(sql.MAX), userData.email)
+        .input('Login', sql.NVarChar(50), userData.login.trim())
+        .input('Email', sql.NVarChar(sql.MAX), userData.email.trim())
         .input('Password', sql.NVarChar(sql.MAX), userData.password)
         .input('RoleId', sql.UniqueIdentifier, userData.roleId)
-        .input('Name', sql.NVarChar(50), userData.name)
-        .input('Surname', sql.NVarChar(50), userData.surname)
-        .input('AboutSection', sql.NVarChar(sql.MAX), userData.about)
+        .input('Name', sql.NVarChar(50), userData.name.trim())
+        .input('Surname', sql.NVarChar(50), userData.surname.trim())
+        .input('AboutSection', sql.NVarChar(sql.MAX), userData.about.trim())
         .execute('CreateUser');
         return result.recordset[0];
     } catch (err) {
@@ -90,8 +90,8 @@ const updateUser = (userData) => {
         return pool.request()
             .input('Id', sql.UniqueIdentifier, userData.id)
             .input('RoleId', sql.UniqueIdentifier, userData.roleId)
-            .input('Name', sql.NVarChar(50), userData.name)
-            .input('Surname', sql.NVarChar(50), userData.surname)
+            .input('Name', sql.NVarChar(50), userData.name.trim())
+            .input('Surname', sql.NVarChar(50), userData.surname.trim())
             .execute('UpdateUserById')
     })
     .then(result => {

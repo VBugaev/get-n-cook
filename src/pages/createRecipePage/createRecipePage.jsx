@@ -39,6 +39,21 @@ class CreateRecipePage extends Component {
         if (values.sideImage3) {
             form.append('sideImage3', values.sideImage3);
         }
+        if (values.step1) {
+            form.append('step1', values.step1.trim());
+        }
+        if (values.step2) {
+            form.append('step2', values.step2.trim());
+        }
+        if (values.step3) {
+            form.append('step3', values.step3.trim());
+        }
+        if (values.step4) {
+            form.append('step4', values.step4.trim());
+        }
+        if (values.step5) {
+            form.append('step5', values.step5.trim());
+        }
         if (values.categories && values.categories.length) {
             counter = 1;
             values.categories.forEach(c => {

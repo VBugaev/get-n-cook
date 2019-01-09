@@ -58,6 +58,26 @@ const createRecipe = async (recipeData) => {
         if (recipeData.category4) {
             await recipesDAL.addCategoryToRecipe(recipeResult.Id, recipeData.category4);
         }
+        if (recipeData.step1) {
+            let step1result = await recipesDAL.createStep(recipeData.step1);
+            await recipesDAL.addStepToRecipe(recipeResult.Id, step1result.Id, 1)
+        }
+        if (recipeData.step2) {
+            let step2result = await recipesDAL.createStep(recipeData.step2);
+            await recipesDAL.addStepToRecipe(recipeResult.Id, step2result.Id, 2)
+        }
+        if (recipeData.step3) {
+            let step3result = await recipesDAL.createStep(recipeData.step3);
+            await recipesDAL.addStepToRecipe(recipeResult.Id, step3result.Id, 3)
+        }
+        if (recipeData.step4) {
+            let step4result = await recipesDAL.createStep(recipeData.step4);
+            await recipesDAL.addStepToRecipe(recipeResult.Id, step4result.Id, 4)
+        }
+        if (recipeData.step5) {
+            let step5result = await recipesDAL.createStep(recipeData.step5);
+            await recipesDAL.addStepToRecipe(recipeResult.Id, step5result.Id, 5)
+        }
         if (recipeData.ingredient1) {
             ingredientsData = recipeData.ingredient1.split(':');
             console.log(ingredientsData);

@@ -58,6 +58,21 @@ module.exports = (router) => {
                     };
                     recipeData['sideImage3'] = sideImage3;
                 }
+                if (req.body.step1) {
+                    recipeData['step1'] = req.body.step1;
+                }
+                if (req.body.step2) {
+                    recipeData['step2'] = req.body.step2;
+                }
+                if (req.body.step3) {
+                    recipeData['step3'] = req.body.step3;
+                }
+                if (req.body.step4) {
+                    recipeData['step4'] = req.body.step4;
+                }
+                if (req.body.step5) {
+                    recipeData['step5'] = req.body.step5;
+                }
                 if (req.body.category1) {
                     recipeData['category1'] = req.body.category1;
                 }

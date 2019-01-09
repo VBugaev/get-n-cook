@@ -58,6 +58,48 @@ const getRecipeById = async (recipeId) => {
     }
 }
 
+
+
+const getAllRecipeSteps = async (recipeId) => {
+    try {
+        let connectedPool = await pool;
+        const result = await connectedPool.request()
+            .input('RecipeId', sql.UniqueIdentifier, recipeId)
+            .execute('GetAllRecipeSteps');
+        return result.recordset;
+    } catch (error) {
+        throw error;
+    }
+}
+
+const createStep = async (desc) => {
+    try {
+        let connectedPool = await pool;
+        await connectedPool.request()
+            .input('Description', sql.NVarChar(sql.MAX), desc)
+            .execute('CreateStep');
+        return true;
+    } catch (error) {
+        console.log(error);
+        throw error;
+    }
+}
+
+const addStepToRecipe = async (recipeId, stepId, orderNumber) => {
+    try {
+        let connectedPool = await pool;
+        await connectedPool.request()
+            .input('RecipeId', sql.UniqueIdentifier, recipeId)
+            .input('StepId', sql.UniqueIdentifier, stepId)
+            .input('OrderNumber', sql.Int, orderNumber)
+            .execute('AddStepToRecipe');
+        return true;
+    } catch (error) {
+        console.log(error);
+        throw error;
+    }
+}
+
 const addImageToRecipe = async (recipeId, imageId) => {
     try {
         let connectedPool = await pool;
@@ -104,8 +146,11 @@ module.exports = {
     getAllRecipes,
     getRecipesByUserId,
     getRecipeById,
+    getAllRecipeSteps,
     createRecipe,
+    createStep,
     addImageToRecipe,
+    addStepToRecipe,
     addCategoryToRecipe,
     addIngredientToRecipe
 };
