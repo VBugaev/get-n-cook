@@ -81,16 +81,16 @@ const CreateRecipeForm = (props) => {
             <Field validate={[validators.required]} name="step1" component={FormInput} type="textarea" placeholder="Введите шаг 1" />
         </FormGroup>
         { props.step1 && (<FormGroup>
-            <Field validate={[validators.required]} name="step2" component={FormInput} type="textarea" placeholder="Введите шаг 2" />
+            <Field name="step2" component={FormInput} type="textarea" placeholder="Введите шаг 2" />
         </FormGroup>) }
         {props.step2 && (<FormGroup>
-            <Field validate={[validators.required]} name="step3" component={FormInput} type="textarea" placeholder="Введите шаг 3" />
+            <Field name="step3" component={FormInput} type="textarea" placeholder="Введите шаг 3" />
         </FormGroup>) }
         {props.step3 && (<FormGroup>
-            <Field validate={[validators.required]} name="step4" component={FormInput} type="textarea" placeholder="Введите шаг 4" />
+            <Field name="step4" component={FormInput} type="textarea" placeholder="Введите шаг 4" />
         </FormGroup>) }
         {props.step4 && (<FormGroup>
-            <Field validate={[validators.required]} name="step5" component={FormInput} type="textarea" placeholder="Введите шаг 5" />
+            <Field name="step5" component={FormInput} type="textarea" placeholder="Введите шаг 5" />
         </FormGroup>) }
         <Button disabled={props.submitting}>Создать рецепт</Button>
     </form>);
