@@ -33,6 +33,10 @@ const maxMulti10 = validators.maxMulti(10);
 
 const CreateRecipeForm = (props) => {
     const hasSelectedIngredients = !!props.selectedIngredients;
+    const hasPreviousStep1 = props.step1 && props.step1.trim();
+    const hasPreviousStep2 = props.step2 && props.step2.trim() && hasPreviousStep1;
+    const hasPreviousStep3 = props.step3 && props.step3.trim() && hasPreviousStep2;
+    const hasPreviousStep4 = props.step4 && props.step4.trim() && hasPreviousStep3;
     return (<form style={{ marginBottom: "30px" }} onSubmit={props.handleSubmit} action="POST">
         <FormGroup>
             <Field validate={[validators.multiRequired, maxMulti4]} name="categories" component={FormAdvancedSelect} options={props.categories} isMulti={true} placeholder="Выберите категории для рецепта" />
@@ -80,16 +84,16 @@ const CreateRecipeForm = (props) => {
         <FormGroup>
             <Field validate={[validators.required]} name="step1" component={FormInput} type="textarea" placeholder="Введите шаг 1" />
         </FormGroup>
-        { props.step1 && (<FormGroup>
+        { hasPreviousStep1 && (<FormGroup>
             <Field name="step2" component={FormInput} type="textarea" placeholder="Введите шаг 2" />
         </FormGroup>) }
-        {props.step2 && (<FormGroup>
+        { hasPreviousStep2 && (<FormGroup>
             <Field name="step3" component={FormInput} type="textarea" placeholder="Введите шаг 3" />
         </FormGroup>) }
-        {props.step3 && (<FormGroup>
+        { hasPreviousStep3 && (<FormGroup>
             <Field name="step4" component={FormInput} type="textarea" placeholder="Введите шаг 4" />
         </FormGroup>) }
-        {props.step4 && (<FormGroup>
+        { hasPreviousStep4 && (<FormGroup>
             <Field name="step5" component={FormInput} type="textarea" placeholder="Введите шаг 5" />
         </FormGroup>) }
         <Button disabled={props.submitting}>Создать рецепт</Button>

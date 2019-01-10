@@ -8,7 +8,12 @@ module.exports = (router) => {
 
     router.route('/recipe/:id')
         .get(async (req, res) => {
-
+            try {
+                const recipe = await recipesController.getRecipeById(req.params.id);
+                res.send(recipe);
+            } catch (error) {
+                res.status(500).send(error);
+            }
         })
 
     router.route('/recipes')
@@ -59,18 +64,23 @@ module.exports = (router) => {
                     recipeData['sideImage3'] = sideImage3;
                 }
                 if (req.body.step1) {
+                    console.log('step added');
                     recipeData['step1'] = req.body.step1;
                 }
                 if (req.body.step2) {
+                    console.log('step added');
                     recipeData['step2'] = req.body.step2;
                 }
                 if (req.body.step3) {
+                    console.log('step added');
                     recipeData['step3'] = req.body.step3;
                 }
                 if (req.body.step4) {
+                    console.log('step added');
                     recipeData['step4'] = req.body.step4;
                 }
                 if (req.body.step5) {
+                    console.log('step added');
                     recipeData['step5'] = req.body.step5;
                 }
                 if (req.body.category1) {

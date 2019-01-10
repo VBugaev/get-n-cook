@@ -28,7 +28,7 @@ class App extends Component {
           <div>
             <Switch>
               <Route path="/admin-management" component={AdminPage} />
-              <Route path="/recipe" component={RecipeDetailsPage} />
+              <Route path="/recipe/:id" component={RecipeDetailsPage} />
               <Route path="/" component={CreateRecipePage} />
             </Switch>
           </div>

@@ -80,7 +80,6 @@ const createRecipe = async (recipeData) => {
         }
         if (recipeData.ingredient1) {
             ingredientsData = recipeData.ingredient1.split(':');
-            console.log(ingredientsData);
             await recipesDAL.addIngredientToRecipe(recipeResult.Id, ingredientsData[0], +ingredientsData[1]);
         }
         if (recipeData.ingredient2) {
@@ -124,8 +123,31 @@ const createRecipe = async (recipeData) => {
         console.log(error);
         throw error;
     }
+};
+
+const getRecipeById = async (recipeId) => {
+    try {
+        const recipeResult = await recipesDAL.getRecipeById(recipeId);
+        const recipeCategories = await recipesDAL.getAllCategoriesByRecipeId(recipeId);
+        const recipeIngredients = await recipesDAL.getAllIngredientsByRecipeId(recipeId);
+        const recipeReviews = await recipesDAL.getAllReviewsByRecipeId(recipeId);
+        const recipeImages = await recipesDAL.getAllImagesByRecipeId(recipeId);
+        const recipeSteps = await recipesDAL.getAllStepsByRecipeId(recipeId);
+        
+        return {
+            ...recipeResult,
+            Categories: recipeCategories || [],
+            Ingredients: recipeIngredients || [],
+            Images: recipeImages || [],
+            Reviews: recipeReviews || [],
+            Steps: recipeSteps || []
+        };
+    } catch (error) {
+        throw error;
+    }
 }
 
 module.exports = {
-    createRecipe
+    createRecipe,
+    getRecipeById
 };

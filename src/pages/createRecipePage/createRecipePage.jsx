@@ -70,6 +70,7 @@ class CreateRecipePage extends Component {
                 counter++;
             })
         }
+        console.log(form);
         fetch('api/recipes', {
             method: 'POST',
             body: form

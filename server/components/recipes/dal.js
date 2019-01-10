@@ -52,7 +52,7 @@ const getRecipeById = async (recipeId) => {
         const result = await connectedPool.request()
             .input('RecipeId', sql.UniqueIdentifier, recipeId)
             .execute('GetRecipeById');
-        return result.recordset;
+        return result.recordset[0];
     } catch (error) {
         throw error;
     }
@@ -60,7 +60,7 @@ const getRecipeById = async (recipeId) => {
 
 
 
-const getAllRecipeSteps = async (recipeId) => {
+const getAllStepsByRecipeId = async (recipeId) => {
     try {
         let connectedPool = await pool;
         const result = await connectedPool.request()
@@ -75,10 +75,10 @@ const getAllRecipeSteps = async (recipeId) => {
 const createStep = async (desc) => {
     try {
         let connectedPool = await pool;
-        await connectedPool.request()
+        let result = await connectedPool.request()
             .input('Description', sql.NVarChar(sql.MAX), desc)
             .execute('CreateStep');
-        return true;
+        return result.recordset[0];
     } catch (error) {
         console.log(error);
         throw error;
@@ -142,11 +142,67 @@ const addIngredientToRecipe = async (recipeId, ingredientId, grammes) => {
     }
  }
 
+ const getAllImagesByRecipeId = async (recipeId) => {
+    try {
+        let connectedPool = await pool;
+        let result = await connectedPool.request()
+            .input('RecipeId', sql.UniqueIdentifier, recipeId)
+            .execute('GetAllImagesByRecipeId');
+            return result.recordset;
+    } catch (error) {
+        console.log(error);
+        throw error;
+    }
+ }
+
+const getAllIngredientsByRecipeId = async (recipeId) => {
+    try {
+        let connectedPool = await pool;
+        let result = await connectedPool.request()
+            .input('RecipeId', sql.UniqueIdentifier, recipeId)
+            .execute('GetAllRecipeIngredients');
+        return result.recordset;
+    } catch (error) {
+        console.log(error);
+        throw error;
+    }
+}
+
+const getAllReviewsByRecipeId = async (recipeId) => {
+    try {
+        let connectedPool = await pool;
+        let result = await connectedPool.request()
+            .input('RecipeId', sql.UniqueIdentifier, recipeId)
+            .execute('GetAllRecipeReviews');
+        return result.recordset;
+    } catch (error) {
+        console.log(error);
+        throw error;
+    }
+}
+
+const getAllCategoriesByRecipeId = async (recipeId) => {
+    try {
+        let connectedPool = await pool;
+        let result = await connectedPool.request()
+            .input('RecipeId', sql.UniqueIdentifier, recipeId)
+            .execute('GetAllCategoriesByRecipeId');
+            return result.recordset;
+    } catch (error) {
+        console.log(error);
+        throw error;
+    }
+}
+
 module.exports = {
     getAllRecipes,
     getRecipesByUserId,
     getRecipeById,
-    getAllRecipeSteps,
+    getAllStepsByRecipeId,
+    getAllImagesByRecipeId,
+    getAllIngredientsByRecipeId,
+    getAllReviewsByRecipeId,
+    getAllCategoriesByRecipeId,
     createRecipe,
     createStep,
     addImageToRecipe,

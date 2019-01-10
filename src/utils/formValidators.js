@@ -1,4 +1,4 @@
-export const required = value => (value && value.trim() ? undefined : 'Необходимое поле')
+export const required = value => (value ? undefined : 'Необходимое поле')
 export const multiRequired = value => value && value.length ? undefined : 'Необходимое поле';
 export const minMulti = min => value => value && value.length < min ? `Минимальное количество : ${min}` : undefined;
 export const maxMulti = max => value => value && value.length > max ? `Максимальное количество : ${max}` : undefined; 
