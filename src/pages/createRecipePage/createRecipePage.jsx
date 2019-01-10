@@ -7,6 +7,8 @@ import CreateRecipeForm from './components/Forms/createRecipeForm';
 import { getCategories, getIngredients, fetchIngredients, fetchCategories } from './modules';
 import { connect } from 'react-redux';
 
+import { Link } from 'react-router-dom';
+
 const pageMapStateToProps = (state) => ({
     categories: getCategories(state),
     ingredients: getIngredients(state)
@@ -89,20 +91,20 @@ class CreateRecipePage extends Component {
             label: i.Title
         }))
         return (
-            <div className="App">
-                <Container>
-                    <Row>
-                        <Col sm="12">
-                            <h3 className="display-4 p-3">Создать рецепт</h3>
-                        </Col>
-                        <Col sm="12">
-                            <Row>
-                                <Col sm="12"><CreateRecipeForm ingredients={ingredientsForSelect} categories={categoriesForSelect} onSubmit={this.onRecipeSubmit} /></Col>
-                            </Row>
-                        </Col>
-                    </Row>
-                </Container>
-            </div>
+            <Container>
+                <Link to="/recipe/1">Go to recipe</Link>
+                <Row>
+                    <Col sm="12">
+                        <h3 className="display-4 p-3">Создать рецепт</h3>
+                    </Col>
+                    <Col sm="12">
+                        <Row>
+                            <Col sm="12"><CreateRecipeForm ingredients={ingredientsForSelect} categories={categoriesForSelect} onSubmit={this.onRecipeSubmit} /></Col>
+                        </Row>
+                    </Col>
+                </Row>
+            </Container>
+
         );
     }
 }
