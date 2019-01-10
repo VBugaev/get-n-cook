@@ -13,6 +13,7 @@ import {
 
 import AdminPage from './pages/adminPage/adminPage.jsx';
 import CreateRecipePage from './pages/createRecipePage/createRecipePage.jsx';
+import MainPage from './pages/mainPage/mainPage';
 import RecipeDetailsPage from './pages/recipeDetailsPage/recipeDetailsPage';
 
 import { Provider } from 'react-redux';
@@ -29,7 +30,8 @@ class App extends Component {
             <Switch>
               <Route path="/admin-management" component={AdminPage} />
               <Route path="/recipe/:id" component={RecipeDetailsPage} />
-              <Route path="/" component={CreateRecipePage} />
+              <Route path="/create-recipe" component={CreateRecipePage} />
+              <Route path="/" component={MainPage} />
             </Switch>
           </div>
         </Router>

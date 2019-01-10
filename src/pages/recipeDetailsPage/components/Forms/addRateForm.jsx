@@ -9,31 +9,31 @@ const AddRateForm = (props) => {
     return (<form style={{ marginBottom: "20px" }} onSubmit={props.handleSubmit} action="POST">
          <FormGroup check>
             <Label check>
-              <Field name="rate" component={FormInput} type="radio" value="1" />{' '}
+              <Field validate={[validators.required]} name="rate" component={FormInput} type="radio" value="1" />{' '}
               1
             </Label>
           </FormGroup>
           <FormGroup check>
             <Label check>
-            <Field name="rate" component={FormInput} type="radio" value="2" />{' '}
+            <Field validate={[validators.required]} name="rate" component={FormInput} type="radio" value="2" />{' '}
               2
             </Label>
           </FormGroup>
           <FormGroup check>
             <Label check>
-            <Field name="rate" component={FormInput} type="radio" value="3" />{' '}
+            <Field validate={[validators.required]} name="rate" component={FormInput} type="radio" value="3" />{' '}
               3
             </Label>
           </FormGroup>
           <FormGroup check>
             <Label check>
-            <Field name="rate" component={FormInput} type="radio" value="4" />{' '}
+            <Field validate={[validators.required]} name="rate" component={FormInput} type="radio" value="4" />{' '}
               4
             </Label>
           </FormGroup>
           <FormGroup check>
             <Label check>
-            <Field name="rate" component={FormInput} type="radio" value="5" />{' '}
+            <Field validate={[validators.required]} name="rate" component={FormInput} type="radio" value="5" />{' '}
               5
             </Label>
           </FormGroup>
