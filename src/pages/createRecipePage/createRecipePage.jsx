@@ -32,6 +32,7 @@ class CreateRecipePage extends Component {
         form.append('difficulty', +values.difficulty.value);
         form.append('preparationTime', values.preparationTime);
         form.append('previewImage', values.previewImage);
+        form.append('userId', localStorage.getItem('id'));
         if (values.sideImage1) {
             form.append('sideImage1', values.sideImage1);
         }
@@ -71,7 +72,7 @@ class CreateRecipePage extends Component {
             })
         }
         console.log(form);
-        fetch('api/recipes', {
+        fetch('http://127.0.0.1:5000/api/recipes', {
             method: 'POST',
             body: form
         }).then(r => r.json())
@@ -93,7 +94,7 @@ class CreateRecipePage extends Component {
         }))
         return (
             <Container>
-                <Link to="/recipe/1">Go to recipe</Link>
+                <Link to="/">на главную</Link>
                 <Row>
                     <Col sm="12">
                         <h3 className="display-4 p-3">Создать рецепт</h3>

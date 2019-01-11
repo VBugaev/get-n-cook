@@ -20,7 +20,7 @@ const fetchUserRateComplete = (data) => ({
 });
 
 export const fetchRecipe = (recipeId) => dispatch => {
-    fetch(`http://127.0.0.1:3000/api/recipe/${recipeId}`)
+    fetch(`http://127.0.0.1:5000/api/recipe/${recipeId}`)
         .then(res => {
             return res.json();
         })

@@ -33,6 +33,22 @@ const createRecipe = async (creatorId, title, difficulty, preparationTime) => {
     }
 }
 
+const createUserReview = async (reviewData) => {
+    try {
+        let connectedPool = await pool;
+        const result = await connectedPool.request()
+            .input('UserId', sql.UniqueIdentifier, reviewData.userId)
+            .input('RecipeId', sql.UniqueIdentifier, reviewData.recipeId)
+            .input('Title', sql.NVarChar(50), reviewData.title)
+            .input('Text', sql.NVarChar(sql.MAX), reviewData.text)
+            .execute('CreateUserReview');
+        return result.recordset[0];
+    } catch (error) {
+        console.log(error);
+        throw error;
+    }
+}
+
 const getRecipesByUserId = async (userId) => {
     try {
         let connectedPool = await pool;
@@ -142,6 +158,21 @@ const addIngredientToRecipe = async (recipeId, ingredientId, grammes) => {
     }
  }
 
+ const addRateToRecipe = async (rateData) => {
+    try {
+        let connectedPool = await pool;
+        await connectedPool.request()
+            .input('RecipeId', sql.UniqueIdentifier, rateData.recipeId)
+            .input('UserId', sql.UniqueIdentifier, rateData.userId)
+            .input('Rate', sql.Int, rateData.rate)
+            .execute('AddRateToRecipe');
+        return true;
+    } catch (error) {
+        console.log(error);
+        throw error;
+    }
+ }
+
  const getAllImagesByRecipeId = async (recipeId) => {
     try {
         let connectedPool = await pool;
@@ -205,8 +236,10 @@ module.exports = {
     getAllCategoriesByRecipeId,
     createRecipe,
     createStep,
+    createUserReview,
     addImageToRecipe,
     addStepToRecipe,
     addCategoryToRecipe,
-    addIngredientToRecipe
+    addIngredientToRecipe,
+    addRateToRecipe
 };

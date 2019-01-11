@@ -25,7 +25,7 @@ class AdminPage extends Component {
   }
 
   componentDidMount() {
-    fetch('/api/roles')
+    fetch('http://127.0.0.1:5000/api/roles')
       .then(res => {
         return res.json();
       })
@@ -72,14 +72,6 @@ class AdminPage extends Component {
                     onClick={() => { this.toggle('4'); }}
                   >
                     Ингредиенты
-                </NavLink>
-                </NavItem>
-                <NavItem>
-                  <NavLink
-                    className={classnames({ active: this.state.activeTab === '5' })}
-                    onClick={() => { this.toggle('5'); }}
-                  >
-                    Логи
                 </NavLink>
                 </NavItem>
               </Nav>

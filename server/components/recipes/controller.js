@@ -1,38 +1,10 @@
 const recipesDAL = require('./dal');
 const imagesDAL = require('../images/dal');
 
-/* recipeData
-{
-    title: string,
-    difficulty: int,
-    preparationTime: int,
-    category1: catId1 string,
-    category2: catId2 string,
-    category3: catId3 string,
-    category4: catId4 string,
-    ingredient1: iId1-iGrammes1 string,
-    ingredient2: iId2-iGrammes2 string,
-    ingredient3: iId3-iGrammes3 string,
-    ingredient4: iId4-iGrammes4 string,
-    ingredient5: iId5-iGrammes5 string,
-    ingredient6: iId6-iGrammes6 string,
-    ingredient7: iId7-iGrammes7 string,
-    ingredient8: iId8-iGrammes8 string,
-    ingredient9: iId9-iGrammes9 string,
-    ingredient10: iId10-iGrammes10 string,
-    previewImage: file,
-    sideImage1: file,
-    sideImage2: file,
-    sideImage3: file
-}
-
-*/
-
 const createRecipe = async (recipeData) => {
     try {
         let ingredientsData = [];
-        const mockCreatorId = '15093F5F-0284-4D42-8817-CF2CB0F75306';
-        const recipeResult = await recipesDAL.createRecipe(mockCreatorId, recipeData.title, recipeData.difficulty, recipeData.preparationTime);
+        const recipeResult = await recipesDAL.createRecipe(recipeData.userId, recipeData.title, recipeData.difficulty, recipeData.preparationTime);
         await imagesDAL.uploadImage(recipeData.previewImage, recipeResult.Id);
         if (recipeData.sideImage1) {
             const sideImage1Result = await imagesDAL.uploadImage(recipeData.sideImage1);

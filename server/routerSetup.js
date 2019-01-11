@@ -1,5 +1,6 @@
 const router = require('express').Router();
 
+require('./components/carts/api.js')(router);
 require('./components/recipes/api.js')(router);
 require('./components/ingredients/api.js')(router);
 require('./components/categories/api.js')(router);

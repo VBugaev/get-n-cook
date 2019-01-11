@@ -28,7 +28,7 @@ export const fetchCreateRecipeFormError = (error) => ({
 });
 
 export const fetchCategories = () => dispatch => {
-    fetch('api/categories')
+    fetch('http://127.0.0.1:5000/api/categories')
         .then(res => {
             return res.json();
         })
@@ -37,7 +37,7 @@ export const fetchCategories = () => dispatch => {
         });
 };
 export const fetchIngredients = () => dispatch => {
-    fetch('api/ingredients')
+    fetch('http://127.0.0.1:5000/api/ingredients')
         .then(res => {
             return res.json();
         })

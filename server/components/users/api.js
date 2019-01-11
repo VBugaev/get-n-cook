@@ -1,6 +1,9 @@
 module.exports = (router) => {
    let usersDAL = require('./dal.js');
    let usersController = require('./controller.js');
+   let multer = require('multer');
+   let storage = multer.memoryStorage();
+   let upload = multer({ storage: storage });
 
    router.route('/users')
       .get((req, res, next) => {
@@ -17,7 +20,17 @@ module.exports = (router) => {
             .then(() => res.status(200).send('Deleted'))
             .catch(err => res.status(500).send(err));
       });
+   
 
+      router.route('/user/:id')
+      .get(async (req, res, next) => {
+         try {
+            const result = await usersDAL.getUserById(req.params.id);
+            res.send(result);
+         } catch (error) {
+            res.status(500).send(error);
+         }
+      });
    router.route('/user')
       .post(async (req, res, next) => {
          try {
@@ -46,15 +59,13 @@ module.exports = (router) => {
          }
       });
    router.route('/register')
-      .post(async (req, res, next) => {
+      .post(upload.single('avatar'), async (req, res, next) => {
          try {
-            console.log(req.body);
-            const result = await usersController.register(req.body);
+            const result = await usersController.register(req.body, req.file);
             if (result.error) {
                res.send(result);
             } else {
                if (req.body.isCreatedByAdmin) {
-                  console.log(result);
                   res.send(result);
                } else {
                   res.send(usersController.toAuthJSON(result));
@@ -68,13 +79,14 @@ module.exports = (router) => {
    router.route('/login')
       .post(async (req, res, next) => {
          try {
+            console.log(req.body)
             const result = await usersController.login(req.body);
             if (result) {
-
+               res.send(usersController.toAuthJSON(result));
             } else {
                res.send({
                   authenticated: false,
-                  error: 'invalid username of password'
+                  error: 'Неверный email или пароль'
                });
             }
          } catch (error) {

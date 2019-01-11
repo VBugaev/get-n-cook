@@ -24,9 +24,45 @@ class RecipeDetailsPage extends Component {
         this.props.fetchRecipe && this.props.fetchRecipe();
     }
 
-    onAddRateSubmit = values => {}
 
-    onAddReviewSubmit = values => {}
+
+    onAddRateSubmit = values => {
+        const { fetchRecipe } = this.props;
+        fetch('http://127.0.0.1:5000/api/rate', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                userId: localStorage.getItem('id'),
+                recipeId: this.props.categoryData.Id,
+                ...values
+            })
+        }).then(r => r.json())
+        .then(data => {
+            console.log(fetchRecipe)
+            fetchRecipe && fetchRecipe();
+        })
+
+    }
+
+    onAddReviewSubmit = values => {
+        const { fetchRecipe } = this.props;
+        fetch('http://127.0.0.1:5000/api/reviews', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                userId: localStorage.getItem('id'),
+                recipeId: this.props.categoryData.Id,
+                ...values
+            })
+        }).then(r => r.json())
+        .then(data => {
+            fetchRecipe && fetchRecipe();
+        })
+    }
 
     render() {
         let categoryData = this.props.categoryData;
@@ -47,15 +83,15 @@ class RecipeDetailsPage extends Component {
                                 (оценило ${categoryData.RecipeCount} пользователей)` : 'Пока не оценено пользователями'}</h4></div>
                                 <div>
                                     <h5>Оставьте оценку:</h5>
-                                    <AddRateForm onSubmit={values => console.log(values)} />
+                                    <AddRateForm onSubmit={this.onAddRateSubmit} />
                                 </div>
                                 <Row>
                                     <Col sm="12" md="3">
-                                        <img style={{ marginBottom: "15px" }} width="100%" alt="preview" src={`http://127.0.0.1:3000/api/image/${categoryData.Id}`} />
+                                        <img style={{ marginBottom: "15px" }} width="100%" alt="preview" src={`http://127.0.0.1:5000/api/image/${categoryData.Id}`} />
                                     </Col>
                                     {categoryData.Images.map(i => (
                                         <Col key={i.Id} sm="12" md="3">
-                                            <img style={{ marginBottom: "15px" }} width="100%" alt="recipeImage" src={`http://127.0.0.1:3000/api/image/${i.Id}`} />
+                                            <img style={{ marginBottom: "15px" }} width="100%" alt="recipeImage" src={`http://127.0.0.1:5000/api/image/${i.Id}`} />
                                         </Col>
                                     ))}
                                 </Row>
@@ -78,7 +114,7 @@ class RecipeDetailsPage extends Component {
                                             <Col style={{ marginBottom: "15px" }} key={i.Id} sm="12" md="3">
                                                 <Card>
                                                     <CardHeader tag="h5">{i.Title}</CardHeader>
-                                                    <img width="100%" alt={i.Title} src={`http://127.0.0.1:3000/api/image/${i.Id}`} />
+                                                    <img width="100%" alt={i.Title} src={`http://127.0.0.1:5000/api/image/${i.Id}`} />
                                                 </Card>
                                             </Col>
                                         ))}
@@ -87,13 +123,13 @@ class RecipeDetailsPage extends Component {
                             </Col>
                             <Col sm="12">
                                 <h5>Опишите впечатления от рецепта:</h5>
-                                <AddReviewForm onSubmit={values => console.log(values)} />
+                                <AddReviewForm onSubmit={this.onAddReviewSubmit} />
                                 <h6>Другие отзывы</h6>
                                 <div>
                                     {categoryData.Reviews.map(r => (
                                         <Col key={r.UserId} sm="12">
                                             <Card>
-                                                <CardHeader tag="h5">{r.Title}{'   '}{r.CreatedAt && dayjs(r.CreatedAt).format('DD MMM YYYY HH:mm:ss')}</CardHeader>
+                                                <CardHeader tag="h5">{r.Title}{' от   '}{r.CreatedAt && dayjs(r.CreatedAt).format('DD MMM YYYY HH:mm:ss')}; {' отправил пользователь '}{r.Login}</CardHeader>
                                                 <CardBody>
                                                     <CardText>{r.Text}</CardText>
                                                 </CardBody>

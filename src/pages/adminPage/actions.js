@@ -109,7 +109,7 @@ export const openUpdateUserModal = (id) => (dispatch, getState) => {
 
 export const getUsers = () => dispatch => {
     dispatch(fetchUsersStart());
-    fetch('api/users')
+    fetch('http://127.0.0.1:5000/api/users')
         .then(res => {
             return res.json();
         })
@@ -120,7 +120,7 @@ export const getUsers = () => dispatch => {
 
 export const getRoles = () => dispatch => {
     dispatch(fetchRolesStart());
-    fetch('api/roles')
+    fetch('http://127.0.0.1:5000/api/roles')
         .then(res => {
             return res.json();
         })
@@ -131,7 +131,7 @@ export const getRoles = () => dispatch => {
 
 export const getCategories = () => dispatch => {
     dispatch(fetchCategoriesStart());
-    fetch('api/categories')
+    fetch('http://127.0.0.1:5000/api/categories')
         .then(res => {
             return res.json();
         })
@@ -141,7 +141,7 @@ export const getCategories = () => dispatch => {
 };
 
 export const createUserByAdmin = (userData) => dispatch => {
-    fetch('api/register', {
+    fetch('http://127.0.0.1:5000/api/register', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -165,7 +165,7 @@ export const createUserByAdmin = (userData) => dispatch => {
 };
 
 export const updateUserByAdmin = (userData, id) => dispatch => {
-    fetch('api/user', {
+    fetch('http://127.0.0.1:5000/api/user', {
         method: 'PUT',
         headers: {
             'Content-Type': 'application/json'
@@ -186,7 +186,7 @@ export const updateUserByAdmin = (userData, id) => dispatch => {
 }
 
 export const createCategoryByAdmin = (categoryData) => dispatch => {
-    fetch('api/categories', {
+    fetch('http://127.0.0.1:5000/api/categories', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -208,7 +208,7 @@ export const createCategoryByAdmin = (categoryData) => dispatch => {
 };
 
 export const deleteCategoryByAdmin = (id) => dispatch => {
-    fetch(`api/categories?id=${id}`, {
+    fetch(`http://127.0.0.1:5000/api/categories?id=${id}`, {
         method: 'DELETE'
     })
         .then(() => {
@@ -220,7 +220,7 @@ export const deleteCategoryByAdmin = (id) => dispatch => {
 };
 
 export const getIngredients = () => dispatch => {
-    fetch('api/ingredients')
+    fetch('http://127.0.0.1:5000/api/ingredients')
         .then(res => {
             return res.json();
         })

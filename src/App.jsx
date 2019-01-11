@@ -15,6 +15,7 @@ import AdminPage from './pages/adminPage/adminPage.jsx';
 import CreateRecipePage from './pages/createRecipePage/createRecipePage.jsx';
 import MainPage from './pages/mainPage/mainPage';
 import RecipeDetailsPage from './pages/recipeDetailsPage/recipeDetailsPage';
+import ProfilePage from './pages/profilePage/profilePage';
 
 import { Provider } from 'react-redux';
 import { configureStore } from './utils/configureStore.js';
@@ -31,6 +32,7 @@ class App extends Component {
               <Route path="/admin-management" component={AdminPage} />
               <Route path="/recipe/:id" component={RecipeDetailsPage} />
               <Route path="/create-recipe" component={CreateRecipePage} />
+              <Route path="/profile" component={ProfilePage} />
               <Route path="/" component={MainPage} />
             </Switch>
           </div>

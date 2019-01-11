@@ -16,6 +16,52 @@ module.exports = (router) => {
             }
         })
 
+    router.route('/user-recipes/:id')
+        .get(async (req, res, next) => {
+            try {
+                const recipesResult = await recipesDAL.getRecipesByUserId(req.params.id);
+                res.send(recipesResult);
+            } catch (error) {
+                res.status(500).send(error);
+            }
+        })
+
+    router.route('/rate')
+    .get(async (req, res, next) => {
+        try {
+            const rateResult = await recipesDAL.getRecipesByUserId(req.query.id);
+            res.send(rateResult);
+        } catch (error) {
+            res.status(500).send(error);
+        }
+    })
+    .post(async (req, res) => {
+        try {
+            const rateResult = await recipesDAL.addRateToRecipe(req.body);
+            res.send(rateResult);
+        } catch (error) {
+            res.status(500).send(error);
+        }
+    })
+
+    router.route('/reviews')
+    .get(async (req, res, next) => {
+        try {
+            const reviewsResult = await recipesDAL.getAllReviewsByRecipeId(req.query.id);
+            res.send(reviewsResult);
+        } catch (error) {
+            res.status(500).send(error);
+        }
+    })
+    .post(async (req, res) => {
+        try {
+            const reviewResult = await recipesDAL.createUserReview(req.body);
+            res.send(reviewResult);
+        } catch (error) {
+            res.status(500).send(error);
+        }
+    })
+
     router.route('/recipes')
         .get(async (req, res, next) => {
             try {
@@ -37,7 +83,8 @@ module.exports = (router) => {
                     title: req.body.title,
                     difficulty: req.body.difficulty,
                     preparationTime: req.body.preparationTime,
-                    previewImage
+                    previewImage,
+                    userId: req.body.userId
                 };
                 if (req.files['sideImage1']) {
                     const sideImage1 = {
