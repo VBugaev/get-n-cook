@@ -235,7 +235,7 @@ export const createIngredient = (values) => dispatch => {
         let form = new FormData();
         form.append('title', values.title);
         form.append('image', values.ingredientImage);
-        fetch('api/ingredients', {
+        fetch('http://127.0.0.1:5000/api/ingredients', {
             method: 'POST',
             body: form
         }).then(r => r.json())

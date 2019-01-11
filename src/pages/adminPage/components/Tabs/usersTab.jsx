@@ -31,11 +31,19 @@ class UsersTab extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            updId: ''
+            updId: '',
+            id: '',
+            login: '',
+            role: ''
         };
     }
     componentDidMount() {
         this.props.getUsers();
+        this.setState({
+            id: localStorage.getItem('id'),
+            login: localStorage.getItem('login'),
+            role: localStorage.getItem('role')
+        });
     }
 
 
@@ -73,7 +81,7 @@ class UsersTab extends Component {
                                 <th>Последнее обновление</th>
                                 <th></th>
                             </tr>
-                            {users.map(user => {
+                            {users.filter(user => user.Login !== this.state.login).map(user => {
                                 return (
                                     <tr key={user.Id}>
                                         <td title={user.RoleTitle}>{user.RoleTitle && <FontAwesomeIcon icon={user.RoleTitle === 'Admin' ? 'user-cog' : 'user'} />}</td>

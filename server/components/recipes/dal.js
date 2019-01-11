@@ -35,6 +35,7 @@ const createRecipe = async (creatorId, title, difficulty, preparationTime) => {
 
 const createUserReview = async (reviewData) => {
     try {
+        console.log(reviewData);
         let connectedPool = await pool;
         const result = await connectedPool.request()
             .input('UserId', sql.UniqueIdentifier, reviewData.userId)

@@ -45,7 +45,6 @@
     "tedious": "^2.6.4",
     "uuid": "^3.3.2"
   },
-  "proxy": "http://localhost:5000",
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",

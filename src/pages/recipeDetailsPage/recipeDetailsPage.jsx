@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 
 import {
-    Container, Row, Col, Card, CardHeader, CardBody, CardText
+    Container, Row, Col, Card, CardHeader, CardBody, CardText, CardFooter
 } from 'reactstrap';
 
 import AddRateForm from './components/Forms/addRateForm';
@@ -20,11 +20,22 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
 });
 
 class RecipeDetailsPage extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            id: '',
+            role: '',
+            login: ''
+        };
+    }
     componentDidMount() {
         this.props.fetchRecipe && this.props.fetchRecipe();
+        this.setState({
+            id: localStorage.getItem('id'),
+            login: localStorage.getItem('login'),
+            role: localStorage.getItem('role')
+        });
     }
-
-
 
     onAddRateSubmit = values => {
         const { fetchRecipe } = this.props;
@@ -42,6 +53,7 @@ class RecipeDetailsPage extends Component {
         .then(data => {
             console.log(fetchRecipe)
             fetchRecipe && fetchRecipe();
+            this.props.history.push(this.props.match.url);
         })
 
     }
@@ -61,12 +73,16 @@ class RecipeDetailsPage extends Component {
         }).then(r => r.json())
         .then(data => {
             fetchRecipe && fetchRecipe();
+            this.props.history.push(this.props.match.url);
         })
     }
 
     render() {
         let categoryData = this.props.categoryData;
+        let { role } = this.state;
+        let authed = !!role;
         let steps = categoryData && orderBy(categoryData.Steps, 'OrderNumber', 'asc');
+
         return (
             <Container fluid={true}>
                 {
@@ -82,8 +98,8 @@ class RecipeDetailsPage extends Component {
                                 <div><h4>Оценка пользователей: {categoryData.RecipeRate ? `${categoryData.RecipeRate} 
                                 (оценило ${categoryData.RecipeCount} пользователей)` : 'Пока не оценено пользователями'}</h4></div>
                                 <div>
-                                    <h5>Оставьте оценку:</h5>
-                                    <AddRateForm onSubmit={this.onAddRateSubmit} />
+                                   {authed &&  <><h5>Оставьте оценку:</h5>
+                                    <AddRateForm onSubmit={this.onAddRateSubmit} /></>}
                                 </div>
                                 <Row>
                                     <Col sm="12" md="3">
@@ -115,6 +131,7 @@ class RecipeDetailsPage extends Component {
                                                 <Card>
                                                     <CardHeader tag="h5">{i.Title}</CardHeader>
                                                     <img width="100%" alt={i.Title} src={`http://127.0.0.1:5000/api/image/${i.Id}`} />
+                                                    <CardFooter>{i.Grammes} грамм</CardFooter>
                                                 </Card>
                                             </Col>
                                         ))}
@@ -122,12 +139,12 @@ class RecipeDetailsPage extends Component {
                                 </div>
                             </Col>
                             <Col sm="12">
-                                <h5>Опишите впечатления от рецепта:</h5>
-                                <AddReviewForm onSubmit={this.onAddReviewSubmit} />
-                                <h6>Другие отзывы</h6>
+                                {authed && <><h5>Опишите впечатления от рецепта:</h5>
+                                <AddReviewForm onSubmit={this.onAddReviewSubmit} /></>}
+                                <h6>Отзывы</h6>
                                 <div>
-                                    {categoryData.Reviews.map(r => (
-                                        <Col key={r.UserId} sm="12">
+                                    {categoryData.Reviews.map((r, index) => (
+                                        <Col key={index} sm="12">
                                             <Card>
                                                 <CardHeader tag="h5">{r.Title}{' от   '}{r.CreatedAt && dayjs(r.CreatedAt).format('DD MMM YYYY HH:mm:ss')}; {' отправил пользователь '}{r.Login}</CardHeader>
                                                 <CardBody>

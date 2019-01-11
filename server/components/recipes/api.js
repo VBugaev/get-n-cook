@@ -50,14 +50,17 @@ module.exports = (router) => {
             const reviewsResult = await recipesDAL.getAllReviewsByRecipeId(req.query.id);
             res.send(reviewsResult);
         } catch (error) {
+
             res.status(500).send(error);
         }
     })
     .post(async (req, res) => {
         try {
+            console.log(req.body);
             const reviewResult = await recipesDAL.createUserReview(req.body);
             res.send(reviewResult);
         } catch (error) {
+            console.log(error);
             res.status(500).send(error);
         }
     })

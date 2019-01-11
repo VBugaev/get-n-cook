@@ -77,6 +77,7 @@ class CreateRecipePage extends Component {
             body: form
         }).then(r => r.json())
             .then(data => {
+                this.props.history.push('/');
             })
             .catch(err => {
                 console.log(err);

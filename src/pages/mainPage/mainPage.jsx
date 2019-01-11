@@ -3,7 +3,7 @@ import React, { Component } from 'react'
 import {
     Container, Row, Col, ListGroup, ListGroupItem, Card, CardTitle, Button,
     Alert,
-    CardText, Modal, ModalBody, ModalHeader
+    CardText, Modal, ModalBody, ModalHeader, Input
 } from 'reactstrap';
 
 import { getCategoryData, fetchRecipe } from './modules';
@@ -22,9 +22,11 @@ class MainPage extends Component {
 
         this.state = {
             recipes: [],
+            displayedRecipes: [],
             loginModal: false,
             loginError: '',
             registerError: '',
+            searchParam: '',
             registerModal: false
         };
     }
@@ -97,7 +99,7 @@ class MainPage extends Component {
                 return res.json();
             })
             .then(values => {
-                this.setState({ recipes: values });
+                this.setState({ recipes: values, displayedRecipes: values });
                 this.setState({
                     id: localStorage.getItem('id'),
                     login: localStorage.getItem('login'),
@@ -105,8 +107,6 @@ class MainPage extends Component {
                 });
             });
     }
-
-
 
     toggleLoginModal = () => {
         this.setState({ loginError: '' });
@@ -132,13 +132,27 @@ class MainPage extends Component {
         });
     }
 
+    onChangeFilter = (e) => {
+        let { recipes } = this.state;
+        let updatedRecipes;
+        if (e.target.value) {
+            updatedRecipes = recipes.filter(recipe => recipe.Title.includes(e.target.value));
+        } else {
+            updatedRecipes = recipes;
+        }
+
+        this.setState({
+            displayedRecipes: updatedRecipes
+        });
+    }
+
     render() {
-        const { recipes, loginError, registerError, id, login, role } = this.state;
+        const { displayedRecipes, loginError, registerError, id, login, role } = this.state;
         const authed = !!id;
         const isAdmin = role === 'Admin';
         return (
-            <Container style={{ marginTop: '50px' }} fluid={true}>{
-                recipes.length ? (<Row>
+            <Container style={{ marginTop: '50px' }} fluid={true}>
+            <Row>
                     <Col sm="3">
                         { login && <h5>Привет, {login}!</h5>}
                         <ListGroup>
@@ -151,7 +165,8 @@ class MainPage extends Component {
                         </ListGroup>
                     </Col>
                     <Col sm="9">
-                        {recipes.map(recipe => (
+                    <Input  style={{ marginBottom: '15px' }} onChange={this.onChangeFilter} placeholder="Введите строку для поиска по названию" />
+                        {displayedRecipes.map(recipe => (
                             <Col style={{ marginBottom: '15px' }} key={recipe.Id} sm="12">
                                 <Card body>
                                     <Row>
@@ -167,7 +182,7 @@ class MainPage extends Component {
                                 </Card>
                             </Col>))}
                     </Col>
-                </Row>) : <span>Загрузка...</span>}
+                </Row>
                 <Modal isOpen={this.state.loginModal} toggle={this.toggleLoginModal}>
                     <ModalHeader toggle={this.toggleLoginModal}>Войти на сайт</ModalHeader>
                     {

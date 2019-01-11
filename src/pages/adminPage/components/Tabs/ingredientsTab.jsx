@@ -46,7 +46,7 @@ class IngredientsTab extends Component {
                             {ingredients.map(ingredient => {
                                 return (
                                     <tr key={ingredient.Id}>
-                                        <td><img className="fit-image" src={`api/image/${ingredient.Id}`} alt="ingredient avatar"/></td>
+                                        <td><img className="fit-image" src={`http://127.0.0.1:5000/api/image/${ingredient.Id}`} alt="ingredient avatar"/></td>
                                         <td>{ingredient.Title}</td>
                                     </tr>
                                 );
