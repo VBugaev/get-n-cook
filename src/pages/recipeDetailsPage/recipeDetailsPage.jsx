@@ -1,7 +1,11 @@
 import React, { Component } from 'react'
 
 import {
+<<<<<<< HEAD
     Container, Row, Col, Card, CardHeader, CardBody, CardText
+=======
+    Container, Row, Col, Card, CardHeader, CardBody, CardText, CardFooter
+>>>>>>> parent of a533285... delete FE at all
 } from 'reactstrap';
 
 import AddRateForm from './components/Forms/addRateForm';
@@ -20,6 +24,7 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
 });
 
 class RecipeDetailsPage extends Component {
+<<<<<<< HEAD
     componentDidMount() {
         this.props.fetchRecipe && this.props.fetchRecipe();
     }
@@ -31,6 +36,71 @@ class RecipeDetailsPage extends Component {
     render() {
         let categoryData = this.props.categoryData;
         let steps = categoryData && orderBy(categoryData.Steps, 'OrderNumber', 'asc');
+=======
+    constructor(props) {
+        super(props);
+        this.state = {
+            id: '',
+            role: '',
+            login: ''
+        };
+    }
+    componentDidMount() {
+        this.props.fetchRecipe && this.props.fetchRecipe();
+        this.setState({
+            id: localStorage.getItem('id'),
+            login: localStorage.getItem('login'),
+            role: localStorage.getItem('role')
+        });
+    }
+
+    onAddRateSubmit = values => {
+        const { fetchRecipe } = this.props;
+        fetch('http://127.0.0.1:5000/api/rate', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                userId: localStorage.getItem('id'),
+                recipeId: this.props.categoryData.Id,
+                ...values
+            })
+        }).then(r => r.json())
+        .then(data => {
+            console.log(fetchRecipe)
+            fetchRecipe && fetchRecipe();
+            this.props.history.push(this.props.match.url);
+        })
+
+    }
+
+    onAddReviewSubmit = values => {
+        const { fetchRecipe } = this.props;
+        fetch('http://127.0.0.1:5000/api/reviews', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                userId: localStorage.getItem('id'),
+                recipeId: this.props.categoryData.Id,
+                ...values
+            })
+        }).then(r => r.json())
+        .then(data => {
+            fetchRecipe && fetchRecipe();
+            this.props.history.push(this.props.match.url);
+        })
+    }
+
+    render() {
+        let categoryData = this.props.categoryData;
+        let { role } = this.state;
+        let authed = !!role;
+        let steps = categoryData && orderBy(categoryData.Steps, 'OrderNumber', 'asc');
+
+>>>>>>> parent of a533285... delete FE at all
         return (
             <Container fluid={true}>
                 {
@@ -46,6 +116,7 @@ class RecipeDetailsPage extends Component {
                                 <div><h4>Оценка пользователей: {categoryData.RecipeRate ? `${categoryData.RecipeRate} 
                                 (оценило ${categoryData.RecipeCount} пользователей)` : 'Пока не оценено пользователями'}</h4></div>
                                 <div>
+<<<<<<< HEAD
                                     <h5>Оставьте оценку:</h5>
                                     <AddRateForm onSubmit={values => console.log(values)} />
                                 </div>
@@ -56,6 +127,18 @@ class RecipeDetailsPage extends Component {
                                     {categoryData.Images.map(i => (
                                         <Col key={i.Id} sm="12" md="3">
                                             <img style={{ marginBottom: "15px" }} width="100%" alt="recipeImage" src={`http://127.0.0.1:3000/api/image/${i.Id}`} />
+=======
+                                   {authed &&  <><h5>Оставьте оценку:</h5>
+                                    <AddRateForm onSubmit={this.onAddRateSubmit} /></>}
+                                </div>
+                                <Row>
+                                    <Col sm="12" md="3">
+                                        <img style={{ marginBottom: "15px" }} width="100%" alt="preview" src={`http://127.0.0.1:5000/api/image/${categoryData.Id}`} />
+                                    </Col>
+                                    {categoryData.Images.map(i => (
+                                        <Col key={i.Id} sm="12" md="3">
+                                            <img style={{ marginBottom: "15px" }} width="100%" alt="recipeImage" src={`http://127.0.0.1:5000/api/image/${i.Id}`} />
+>>>>>>> parent of a533285... delete FE at all
                                         </Col>
                                     ))}
                                 </Row>
@@ -78,7 +161,12 @@ class RecipeDetailsPage extends Component {
                                             <Col style={{ marginBottom: "15px" }} key={i.Id} sm="12" md="3">
                                                 <Card>
                                                     <CardHeader tag="h5">{i.Title}</CardHeader>
+<<<<<<< HEAD
                                                     <img width="100%" alt={i.Title} src={`http://127.0.0.1:3000/api/image/${i.Id}`} />
+=======
+                                                    <img width="100%" alt={i.Title} src={`http://127.0.0.1:5000/api/image/${i.Id}`} />
+                                                    <CardFooter>{i.Grammes} грамм</CardFooter>
+>>>>>>> parent of a533285... delete FE at all
                                                 </Card>
                                             </Col>
                                         ))}
@@ -86,6 +174,7 @@ class RecipeDetailsPage extends Component {
                                 </div>
                             </Col>
                             <Col sm="12">
+<<<<<<< HEAD
                                 <h5>Опишите впечатления от рецепта:</h5>
                                 <AddReviewForm onSubmit={values => console.log(values)} />
                                 <h6>Другие отзывы</h6>
@@ -94,6 +183,16 @@ class RecipeDetailsPage extends Component {
                                         <Col key={r.UserId} sm="12">
                                             <Card>
                                                 <CardHeader tag="h5">{r.Title}{'   '}{r.CreatedAt && dayjs(r.CreatedAt).format('DD MMM YYYY HH:mm:ss')}</CardHeader>
+=======
+                                {authed && <><h5>Опишите впечатления от рецепта:</h5>
+                                <AddReviewForm onSubmit={this.onAddReviewSubmit} /></>}
+                                <h6>Отзывы</h6>
+                                <div>
+                                    {categoryData.Reviews.map((r, index) => (
+                                        <Col key={index} sm="12">
+                                            <Card>
+                                                <CardHeader tag="h5">{r.Title}{' от   '}{r.CreatedAt && dayjs(r.CreatedAt).format('DD MMM YYYY HH:mm:ss')}; {' отправил пользователь '}{r.Login}</CardHeader>
+>>>>>>> parent of a533285... delete FE at all
                                                 <CardBody>
                                                     <CardText>{r.Text}</CardText>
                                                 </CardBody>

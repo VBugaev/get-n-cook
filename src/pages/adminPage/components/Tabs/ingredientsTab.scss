@@ -1,0 +1,20 @@
+.tab-alert {
+    animation: fading 2s linear;
+    animation-delay: 5s;
+}
+
+@keyframes fading {
+    100% { opacity: 0 }
+}
+
+.ingredients-table {
+    table-layout: fixed;
+}
+
+.image-col {
+    width: 150px;
+}
+
+.fit-image {
+    width: 100%;
+}

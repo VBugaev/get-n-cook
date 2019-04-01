@@ -109,7 +109,11 @@ export const openUpdateUserModal = (id) => (dispatch, getState) => {
 
 export const getUsers = () => dispatch => {
     dispatch(fetchUsersStart());
+<<<<<<< HEAD
     fetch('api/users')
+=======
+    fetch('http://127.0.0.1:5000/api/users')
+>>>>>>> parent of a533285... delete FE at all
         .then(res => {
             return res.json();
         })
@@ -120,7 +124,11 @@ export const getUsers = () => dispatch => {
 
 export const getRoles = () => dispatch => {
     dispatch(fetchRolesStart());
+<<<<<<< HEAD
     fetch('api/roles')
+=======
+    fetch('http://127.0.0.1:5000/api/roles')
+>>>>>>> parent of a533285... delete FE at all
         .then(res => {
             return res.json();
         })
@@ -131,7 +139,11 @@ export const getRoles = () => dispatch => {
 
 export const getCategories = () => dispatch => {
     dispatch(fetchCategoriesStart());
+<<<<<<< HEAD
     fetch('api/categories')
+=======
+    fetch('http://127.0.0.1:5000/api/categories')
+>>>>>>> parent of a533285... delete FE at all
         .then(res => {
             return res.json();
         })
@@ -141,7 +153,11 @@ export const getCategories = () => dispatch => {
 };
 
 export const createUserByAdmin = (userData) => dispatch => {
+<<<<<<< HEAD
     fetch('api/register', {
+=======
+    fetch('http://127.0.0.1:5000/api/register', {
+>>>>>>> parent of a533285... delete FE at all
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -165,7 +181,11 @@ export const createUserByAdmin = (userData) => dispatch => {
 };
 
 export const updateUserByAdmin = (userData, id) => dispatch => {
+<<<<<<< HEAD
     fetch('api/user', {
+=======
+    fetch('http://127.0.0.1:5000/api/user', {
+>>>>>>> parent of a533285... delete FE at all
         method: 'PUT',
         headers: {
             'Content-Type': 'application/json'
@@ -186,7 +206,11 @@ export const updateUserByAdmin = (userData, id) => dispatch => {
 }
 
 export const createCategoryByAdmin = (categoryData) => dispatch => {
+<<<<<<< HEAD
     fetch('api/categories', {
+=======
+    fetch('http://127.0.0.1:5000/api/categories', {
+>>>>>>> parent of a533285... delete FE at all
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -208,7 +232,11 @@ export const createCategoryByAdmin = (categoryData) => dispatch => {
 };
 
 export const deleteCategoryByAdmin = (id) => dispatch => {
+<<<<<<< HEAD
     fetch(`api/categories?id=${id}`, {
+=======
+    fetch(`http://127.0.0.1:5000/api/categories?id=${id}`, {
+>>>>>>> parent of a533285... delete FE at all
         method: 'DELETE'
     })
         .then(() => {
@@ -220,7 +248,11 @@ export const deleteCategoryByAdmin = (id) => dispatch => {
 };
 
 export const getIngredients = () => dispatch => {
+<<<<<<< HEAD
     fetch('api/ingredients')
+=======
+    fetch('http://127.0.0.1:5000/api/ingredients')
+>>>>>>> parent of a533285... delete FE at all
         .then(res => {
             return res.json();
         })
@@ -235,7 +267,11 @@ export const createIngredient = (values) => dispatch => {
         let form = new FormData();
         form.append('title', values.title);
         form.append('image', values.ingredientImage);
+<<<<<<< HEAD
         fetch('api/ingredients', {
+=======
+        fetch('http://127.0.0.1:5000/api/ingredients', {
+>>>>>>> parent of a533285... delete FE at all
             method: 'POST',
             body: form
         }).then(r => r.json())

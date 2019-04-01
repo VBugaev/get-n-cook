@@ -32,6 +32,10 @@ class CreateRecipePage extends Component {
         form.append('difficulty', +values.difficulty.value);
         form.append('preparationTime', values.preparationTime);
         form.append('previewImage', values.previewImage);
+<<<<<<< HEAD
+=======
+        form.append('userId', localStorage.getItem('id'));
+>>>>>>> parent of a533285... delete FE at all
         if (values.sideImage1) {
             form.append('sideImage1', values.sideImage1);
         }
@@ -71,11 +75,19 @@ class CreateRecipePage extends Component {
             })
         }
         console.log(form);
+<<<<<<< HEAD
         fetch('api/recipes', {
+=======
+        fetch('http://127.0.0.1:5000/api/recipes', {
+>>>>>>> parent of a533285... delete FE at all
             method: 'POST',
             body: form
         }).then(r => r.json())
             .then(data => {
+<<<<<<< HEAD
+=======
+                this.props.history.push('/');
+>>>>>>> parent of a533285... delete FE at all
             })
             .catch(err => {
                 console.log(err);
@@ -93,7 +105,11 @@ class CreateRecipePage extends Component {
         }))
         return (
             <Container>
+<<<<<<< HEAD
                 <Link to="/recipe/1">Go to recipe</Link>
+=======
+                <Link to="/">на главную</Link>
+>>>>>>> parent of a533285... delete FE at all
                 <Row>
                     <Col sm="12">
                         <h3 className="display-4 p-3">Создать рецепт</h3>

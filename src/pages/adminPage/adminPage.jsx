@@ -25,7 +25,11 @@ class AdminPage extends Component {
   }
 
   componentDidMount() {
+<<<<<<< HEAD
     fetch('/api/roles')
+=======
+    fetch('http://127.0.0.1:5000/api/roles')
+>>>>>>> parent of a533285... delete FE at all
       .then(res => {
         return res.json();
       })
@@ -74,6 +78,7 @@ class AdminPage extends Component {
                     Ингредиенты
                 </NavLink>
                 </NavItem>
+<<<<<<< HEAD
                 <NavItem>
                   <NavLink
                     className={classnames({ active: this.state.activeTab === '5' })}
@@ -82,6 +87,8 @@ class AdminPage extends Component {
                     Логи
                 </NavLink>
                 </NavItem>
+=======
+>>>>>>> parent of a533285... delete FE at all
               </Nav>
               <TabContent activeTab={this.state.activeTab}>
                 <TabPane tabId="1">

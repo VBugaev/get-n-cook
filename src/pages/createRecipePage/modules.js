@@ -28,7 +28,11 @@ export const fetchCreateRecipeFormError = (error) => ({
 });
 
 export const fetchCategories = () => dispatch => {
+<<<<<<< HEAD
     fetch('api/categories')
+=======
+    fetch('http://127.0.0.1:5000/api/categories')
+>>>>>>> parent of a533285... delete FE at all
         .then(res => {
             return res.json();
         })
@@ -37,7 +41,11 @@ export const fetchCategories = () => dispatch => {
         });
 };
 export const fetchIngredients = () => dispatch => {
+<<<<<<< HEAD
     fetch('api/ingredients')
+=======
+    fetch('http://127.0.0.1:5000/api/ingredients')
+>>>>>>> parent of a533285... delete FE at all
         .then(res => {
             return res.json();
         })

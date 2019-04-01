@@ -9,5 +9,9 @@ export const letters = value => value && !/[a-zA-ZА-Яа-я ]+/g.test(value) ? 
 export const minValue = min => value => value && value < min ? `Минимальная длина ${min} символов` : undefined
 export const email = value =>
   value && !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(value)
+<<<<<<< HEAD
     ? 'Неверный email'
+=======
+    ? 'Неверный формат email'
+>>>>>>> parent of a533285... delete FE at all
     : undefined

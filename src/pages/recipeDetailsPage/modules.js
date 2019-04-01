@@ -20,7 +20,11 @@ const fetchUserRateComplete = (data) => ({
 });
 
 export const fetchRecipe = (recipeId) => dispatch => {
+<<<<<<< HEAD
     fetch(`http://127.0.0.1:3000/api/recipe/${recipeId}`)
+=======
+    fetch(`http://127.0.0.1:5000/api/recipe/${recipeId}`)
+>>>>>>> parent of a533285... delete FE at all
         .then(res => {
             return res.json();
         })
